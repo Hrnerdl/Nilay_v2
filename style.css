@@ -177,18 +177,18 @@ button:hover {
     color: white;
     padding: 4px 6px;
     border-radius: 6px;
-    margin-top: 2px; /* friend-info'dan önce hafif boşluk */
+    margin-top: 2px;
     width: 90%;
     box-sizing: border-box;
     margin-bottom: 0;
 }
 
-/* Yeni: Takvimdeki Nöbet Arkadaşı Bilgisi Stili */
+/* Takvimdeki Nöbet Arkadaşı Bilgisi Stili */
 .friend-info {
-    font-size: 0.7em; /* Nöbet saatinden biraz daha küçük */
+    font-size: 0.7em; 
     font-weight: 500;
-    color: #333; /* Daha yumuşak bir renk */
-    background-color: rgba(255, 255, 255, 0.8); /* Şeffaf beyaz arkaplan */
+    color: #333; 
+    background-color: rgba(255, 255, 255, 0.8); 
     padding: 2px 4px;
     border-radius: 4px;
     margin-top: 2px;
@@ -197,9 +197,9 @@ button:hover {
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
-    margin-bottom: 5px; /* Alt boşluk */
+    margin-bottom: 5px; 
 }
-/* /Yeni */
+
 
 /* --- NÖBET SAATİNE GÖRE RENKLER --- */
 .shift-8 {
@@ -234,11 +234,12 @@ button:hover {
     padding: 0;
 }
 
+/* GÜNCELLENDİ: Gülen Yüz Rengine Uygun Stil */
 .free-day-emoji { 
     font-size: 1.5em; 
     margin-top: auto; 
     margin-bottom: 5px; 
-    color: #34c759; 
+    color: #34c759; /* Yeşil renk */
     font-weight: bold;
 }
 
@@ -295,17 +296,16 @@ button:hover {
     font-weight: 300; 
 }
 
-/* --- Select Menü ve Input Stilleri (YENİ) --- */
+/* --- Select Menü ve Input Stilleri --- */
 .form-group select, 
 .month-selector input[type="month"],
 .form-group input[type="text"] {
-    /* iOS form elemanı görünümü */
     width: 100%;
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 6px;
     background-color: #f9f9f9;
-    appearance: none; /* Varsayılan stil okunu kaldır */
+    appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
     background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path fill="gray" d="M7 10l5 5 5-5z"/></svg>');
@@ -314,25 +314,25 @@ button:hover {
     padding-right: 30px;
 }
 
-/* Tek Gün Düzenleme Modalındaki Arkadaş İsmi Input'u için ek stil */
+/* Tek Gün Düzenleme Modalındaki Arkadaş İsmi Input'u */
 .friend-input input[type="text"] {
     width: 100%;
     box-sizing: border-box;
-    background-image: none; /* Text input'tan ok ikonunu kaldır */
+    background-image: none;
     padding-right: 8px;
 }
 
 /* Toplu Giriş Modalındaki Select'ler */
 .day-input-group select {
-    width: 120px; /* Daha dar bir genişlik veriyoruz */
+    width: 120px; 
     text-align: center;
     font-size: 0.9em;
-    padding-right: 30px; /* Ok için alan */
+    padding-right: 30px; 
 }
 
-/* Yeni: Tekli Gün Input Grubu içindeki Arkadaş İsmi Input'u */
+/* Tekli Gün Input Grubu içindeki Arkadaş İsmi Input'u */
 .day-input-group input[type="text"] {
-    width: 100px; /* Select'in yanına sığması için daralt */
+    width: 100px; 
     text-align: center;
     padding: 6px 4px;
     font-size: 0.85em;
@@ -343,7 +343,7 @@ button:hover {
 /* --- Toplu Giriş Modal Stilleri --- */
 #days-input-list {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Genişlik arttı */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
     gap: 10px;
     max-height: 50vh; 
     overflow-y: scroll;
@@ -394,9 +394,9 @@ button:hover {
     #days-input-list {
         grid-template-columns: 1fr;
     }
-    /* Yeni: Mobil görünüme uyum */
+    /* Mobil görünüme uyum */
     .day-input-group {
-        flex-wrap: wrap; /* Mobil alt alta sığdırmak için */
+        flex-wrap: wrap; 
     }
     .day-input-group label {
         width: 100%;
@@ -404,7 +404,7 @@ button:hover {
     }
     .day-input-group select, 
     .day-input-group input[type="text"] {
-        width: 48%; /* Yan yana durmaları için */
+        width: 48%; 
         box-sizing: border-box;
     }
     .day-input-group select {
@@ -413,5 +413,4 @@ button:hover {
     .day-input-group input[type="text"] {
         width: 48%;
     }
-    /* /Yeni */
 }
