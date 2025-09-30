@@ -51,10 +51,18 @@ const getShiftColorClass = (hours) => {
     return ''; 
 };
 
+// Saat bilgisine göre ikonu döndüren fonksiyon
+const getShiftIcon = (hours) => {
+    if (hours === 8) return '☀️';   // Gündüz Nöbeti
+    if (hours === 16) return '🌙';  // Akşam Nöbeti
+    if (hours === 24) return '✨';  // Uzun Nöbet
+    return ''; 
+};
 
-// --- Aylık Giriş Modalı Yönetimi ve İşlemleri (GÜNCELLENDİ) ---
 
-// Toplu Giriş Modalındaki Gün Inputlarını Oluşturma (SELECT VE TEXT INPUT KULLANIMI)
+// --- Aylık Giriş Modalı Yönetimi ve İşlemleri ---
+
+// Toplu Giriş Modalındaki Gün Inputlarını Oluşturma 
 const generateDayInputs = (year, month) => {
     daysInputList.innerHTML = '';
     const daysInMonth = new Date(year, month + 1, 0).getDate();
@@ -62,7 +70,6 @@ const generateDayInputs = (year, month) => {
     for (let day = 1; day <= daysInMonth; day++) {
         const fullDate = new Date(year, month, day);
         const dateKey = formatDate(fullDate);
-        // Yeni: Kayıtlı nöbet saatini ve arkadaşını alıyoruz.
         const existingShift = shifts[dateKey] || {}; 
         const existingHours = existingShift.hours || 0;
         const existingFriend = existingShift.friend || '';
@@ -82,7 +89,7 @@ const generateDayInputs = (year, month) => {
         
         selectHtml += `</select>`;
 
-        // Yeni: Arkadaş ismi için text input
+        // Arkadaş ismi için text input
         const friendInputHtml = `<input type="text" id="friend-${dateKey}" name="friend-${dateKey}" placeholder="İsim" value="${existingFriend}">`;
 
         dayInputGroup.innerHTML = `
@@ -97,7 +104,6 @@ const generateDayInputs = (year, month) => {
 };
 
 const openFullMonthInputModal = (date) => {
-    // Modal her açıldığında varsayılan arkadaş ismini temizle
     document.getElementById('default-friend-name').value = ''; 
 
     const year = date.getFullYear();
@@ -111,7 +117,7 @@ const openFullMonthInputModal = (date) => {
     fullMonthInputModal.style.display = 'block';
 };
 
-// Toplu Giriş Formu Submit Olayı (SELECT VE TEXT VERİLERİNİ OKUMA)
+// Toplu Giriş Formu Submit Olayı
 fullMonthShiftForm.addEventListener('submit', (e) => {
     e.preventDefault();
     
@@ -122,10 +128,8 @@ fullMonthShiftForm.addEventListener('submit', (e) => {
     
     const daysInMonth = new Date(year, month + 1, 0).getDate();
     
-    // Yeni: Varsayılan arkadaş ismini al
     const defaultFriendName = document.getElementById('default-friend-name').value.trim();
 
-    // Tüm günlerin SELECT ve TEXT elementlerini kontrol et
     for (let day = 1; day <= daysInMonth; day++) {
         const fullDate = new Date(year, month, day);
         const dateKey = formatDate(fullDate);
@@ -135,19 +139,16 @@ fullMonthShiftForm.addEventListener('submit', (e) => {
         
         if (hoursSelect) {
             const hours = parseInt(hoursSelect.value); 
-            // Arkadaş ismini al
             let friend = friendInput ? friendInput.value.trim() : ''; 
             
-            // Eğer saat girilmişse ve friend alanı boşsa, defaultFriendName'i kullan.
             if (hours > 0 && friend === '') {
                 friend = defaultFriendName;
             }
             
             if (hours > 0) {
-                // Yeni: Nöbet verisini obje olarak kaydediyoruz
                 shifts[dateKey] = { hours: hours, friend: friend };
             } else {
-                delete shifts[dateKey]; // 0 girildiyse siliyoruz (Boş Gün)
+                delete shifts[dateKey];
             }
         }
     }
@@ -179,7 +180,6 @@ const renderCalendar = (date) => {
 
     currentMonthYearEl.textContent = `${monthNames[month]} ${year}`;
 
-    // Yeni gün isimleri sırası: Pzt, Sal, Çar, Per, Cum, Cmt, Paz
     const dayNames = ["Pzt", "Sal", "Çar", "Per", "Cum", "Cmt", "Paz"];
     dayNames.forEach(day => {
         const header = document.createElement('div');
@@ -191,7 +191,6 @@ const renderCalendar = (date) => {
     const firstDay = new Date(year, month, 1).getDay();
     const daysInMonth = new Date(year, month + 1, 0).getDate();
     
-    // Haftanın başlangıcı Pazartesi (1) olmalı.
     const startDayIndex = (firstDay === 0) ? 6 : firstDay - 1; 
 
     for (let i = 0; i < startDayIndex; i++) {
@@ -204,7 +203,6 @@ const renderCalendar = (date) => {
     for (let day = 1; day <= daysInMonth; day++) {
         const fullDate = new Date(year, month, day);
         const dateKey = formatDate(fullDate);
-        // Yeni: Nöbet verisini obje olarak alıyoruz
         const shiftData = shifts[dateKey];
         const hours = shiftData ? shiftData.hours : undefined;
         const friend = shiftData ? shiftData.friend : '';
@@ -221,7 +219,7 @@ const renderCalendar = (date) => {
         if (hours) { // Nöbet Günü
             dayEl.classList.add('shift-day');
             
-            // 1. Nöbet Saati Bilgisi
+            // 1. Nöbet Saati Bilgisi (İkon Eklendi)
             const shiftInfoEl = document.createElement('div');
             shiftInfoEl.classList.add('shift-info');
             
@@ -230,10 +228,12 @@ const renderCalendar = (date) => {
                 shiftInfoEl.classList.add(colorClass); 
             }
             
-            shiftInfoEl.textContent = `${hours} Saat`;
+            // İKON VE SAAT BİLGİSİ
+            const icon = getShiftIcon(hours); 
+            shiftInfoEl.textContent = `${icon} ${hours} Saat`; // İkon saat bilgisinin önüne eklendi
             dayEl.appendChild(shiftInfoEl);
 
-            // 2. Yeni: Arkadaş İsmi Bilgisi
+            // 2. Arkadaş İsmi Bilgisi
             if (friend) {
                 const friendInfoEl = document.createElement('div');
                 friendInfoEl.classList.add('friend-info');
@@ -241,18 +241,17 @@ const renderCalendar = (date) => {
                 dayEl.appendChild(friendInfoEl);
             }
             
-            // openEditModal'a friend bilgisini de gönderiyoruz
             dayEl.addEventListener('click', () => openEditModal(dateKey, hours, friend)); 
 
         } else { // Boş/İzin Günü
             dayEl.classList.add('free-day');
             
             const emojiEl = document.createElement('div');
+            // GÜNCELLENDİ: Gülen Yüz Emojisi Geri Geldi
             emojiEl.textContent = '😊'; 
             emojiEl.classList.add('free-day-emoji');
             dayEl.appendChild(emojiEl);
             
-            // Boş gün için düzenleme modalını açar (hours=0, friend='')
             dayEl.addEventListener('click', () => openEditModal(dateKey, 0, ''));
         }
         
@@ -260,11 +259,11 @@ const renderCalendar = (date) => {
     }
 };
 
-// --- Tek Gün Düzenleme Modalı Fonksiyonları (GÜNCELLENDİ) ---
+// --- Tek Gün Düzenleme Modalı Fonksiyonları ---
 
 let currentEditingDate = null; 
 
-// openEditModal (SELECT VE INPUT DEĞERİNİ AYARLAMA)
+// openEditModal
 const openEditModal = (dateKey, hours, friend) => {
     currentEditingDate = dateKey;
     const dateParts = dateKey.split('-');
@@ -272,10 +271,7 @@ const openEditModal = (dateKey, hours, friend) => {
 
     document.getElementById('edit-date-display').textContent = `${formattedDate} tarihindeki nöbeti düzenle`;
     
-    // Select elementinin değerini (hours) ayarlıyoruz
     document.getElementById('edit-hours').value = hours;
-    
-    // Yeni: Arkadaş ismini input'a yüklüyoruz
     document.getElementById('edit-friend-name').value = friend;
 
     editModal.style.display = 'block';
@@ -286,22 +282,18 @@ const closeEditModal = () => {
     currentEditingDate = null;
 };
 
-// Tek Gün Kaydetme Formu (SELECT VE TEXT VERİSİNİ OKUMA)
+// Tek Gün Kaydetme Formu
 document.getElementById('edit-form').addEventListener('submit', (e) => {
     e.preventDefault();
     if (!currentEditingDate) return;
 
-    // Select'ten gelen değeri okuyoruz
     const newHours = parseInt(document.getElementById('edit-hours').value);
-    
-    // Yeni: Input'tan gelen arkadaş ismini okuyoruz
     const newFriend = document.getElementById('edit-friend-name').value.trim();
     
     if (newHours > 0) {
-        // Yeni: Nöbeti obje olarak kaydediyoruz
         shifts[currentEditingDate] = { hours: newHours, friend: newFriend };
     } else {
-        delete shifts[currentEditingDate]; // 0 girildiyse siliyoruz (Boş Gün)
+        delete shifts[currentEditingDate];
     }
 
     saveShifts();
@@ -309,7 +301,7 @@ document.getElementById('edit-form').addEventListener('submit', (e) => {
     closeEditModal();
 });
 
-// Tek Gün Silme Butonu (Değişiklik Yok)
+// Tek Gün Silme Butonu
 document.getElementById('delete-shift-btn').addEventListener('click', () => {
     if (!currentEditingDate) return;
 
@@ -322,7 +314,7 @@ document.getElementById('delete-shift-btn').addEventListener('click', () => {
 });
 
 
-// --- Olay Dinleyicileri (Başlatma ve Navigasyon) (Değişiklik Yok) ---
+// --- Olay Dinleyicileri (Başlatma ve Navigasyon) ---
 
 document.getElementById('open-input-modal-btn').addEventListener('click', () => {
     openFullMonthInputModal(new Date());
@@ -352,7 +344,7 @@ window.addEventListener('click', (event) => {
     }
 });
 
-// --- Uygulamayı Başlat (Değişiklik Yok) ---
+// --- Uygulamayı Başlat ---
 document.addEventListener('DOMContentLoaded', () => {
     if (Object.keys(shifts).length > 0) {
         const lastDate = Object.keys(shifts).sort().pop();
