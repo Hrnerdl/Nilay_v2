@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nöbet Takip Uygulaması</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <h1>Dünyanın En Güzel Hemşiresinin Çalışma Saatleri</h1>
+    </header>
+
+    <main>
+        
+        <section class="start-section" id="start-section">
+            <p>Hangi aya ait nöbetleri girmek istersin?</p>
+            <button id="open-input-modal-btn">Bu Ayın Nöbetlerini Gir/Düzenle</button>
+        </section>
+
+        <section class="calendar-container hidden" id="calendar-view">
+            <div class="calendar-header">
+                <button id="prev-month"> &lt; </button>
+                <h2 id="current-month-year"></h2>
+                <button id="next-month"> &gt; </button>
+            </div>
+            <div class="calendar" id="calendar">
+                </div>
+            <button id="reopen-input-modal-btn" class="edit-all-btn">Tüm Ayı Toplu Düzenle</button>
+        </section>
+
+        <div id="full-month-input-modal" class="modal">
+            <div class="modal-content large-modal">
+                <span class="close-button full-month-close-btn">&times;</span>
+                <h3><span id="modal-month-name"></span> Ayı Nöbet Girişi</h3>
+                
+                <form id="full-month-shift-form">
+                    <div class="form-group month-selector">
+                        <label for="input-month">Giriş Yapılacak Ay:</label>
+                        <input type="month" id="input-month" required>
+                    </div>
+
+                    <div class="form-group default-friend-input">
+                        <label for="default-friend-name">Varsayılan Arkadaş İsmi (İsteğe Bağlı):</label>
+                        <input type="text" id="default-friend-name" placeholder="Örn: Ayşe, Mehmet..." value="">
+                    </div>
+                    <div id="days-input-list"></div>
+                    
+                    <button type="submit" id="save-all-shifts-btn">Tüm Nöbetleri Kaydet</button>
+                </form>
+            </div>
+        </div>
+        
+        <div id="edit-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-button edit-close-btn">&times;</span>
+                <h3>Nöbeti Düzenle</h3>
+                <p id="edit-date-display"></p>
+                <form id="edit-form">
+                    <div class="form-group">
+                        <label for="edit-hours">Çalışma Saati:</label>
+                        <select id="edit-hours" name="edit-hours">
+                            <option value="0">0 Saat (İzin/Boş Gün)</option>
+                            <option value="8">8 Saat</option>
+                            <option value="16">16 Saat</option>
+                            <option value="24">24 Saat</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group friend-input">
+                        <label for="edit-friend-name">Nöbet Arkadaşı (İsteğe Bağlı):</label>
+                        <input type="text" id="edit-friend-name" name="edit-friend-name" placeholder="İsim">
+                    </div>
+                    <button type="submit">Kaydet</button>
+                    <button type="button" id="delete-shift-btn" class="delete-btn">SİL</button>
+                </form>
+            </div>
+        </div>
+
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
