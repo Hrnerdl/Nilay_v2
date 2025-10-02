@@ -27,13 +27,26 @@
             </div>
             <div class="calendar" id="calendar">
                 </div>
-            <button id="reopen-input-modal-btn" class="edit-all-btn">Tüm Ayı Toplu Düzenle</button>
+            
+            <div class="calendar-actions">
+                <button id="reopen-input-modal-btn" class="edit-all-btn">Tüm Ayı Toplu Düzenle</button>
+                
+                <div class="data-transfer-group">
+                    <button id="export-data-btn" class="transfer-btn export-btn">Veriyi İndir (JSON)</button>
+                    <input type="file" id="import-file-input" accept=".json" style="display: none;">
+                    <button id="import-data-btn" class="transfer-btn import-btn">Veri Yükle (JSON)</button>
+                </div>
+                </div>
+            
+            <div class="summary-container" id="summary-container">
+                </div>
+            
         </section>
 
         <div id="full-month-input-modal" class="modal">
             <div class="modal-content large-modal">
                 <span class="close-button full-month-close-btn">&times;</span>
-                <h3><span id="modal-month-name"></span> Ayı Nöbet Girişi</h3>
+                <h3><span id="modal-month-name"></span> Ayı Nöbet Girişi ve Yemek Listesi</h3>
                 
                 <form id="full-month-shift-form">
                     <div class="form-group month-selector">
@@ -42,12 +55,13 @@
                     </div>
 
                     <div class="form-group default-friend-input">
-                        <label for="default-friend-name">Varsayılan Arkadaş İsmi (İsteğe Bağlı):</label>
+                        <label for="default-friend-name">Varsayılan Arkadaş İsmi (Nöbet girilmeyen günler için boş bırakın):</label>
                         <input type="text" id="default-friend-name" placeholder="Örn: Ayşe, Mehmet..." value="">
                     </div>
+                    
                     <div id="days-input-list"></div>
                     
-                    <button type="submit" id="save-all-shifts-btn">Tüm Nöbetleri Kaydet</button>
+                    <button type="submit" id="save-all-shifts-btn">Tüm Nöbet ve Menüleri Kaydet</button>
                 </form>
             </div>
         </div>
@@ -55,7 +69,7 @@
         <div id="edit-modal" class="modal">
             <div class="modal-content">
                 <span class="close-button edit-close-btn">&times;</span>
-                <h3>Nöbeti Düzenle</h3>
+                <h3>Nöbet/Menü Düzenle</h3>
                 <p id="edit-date-display"></p>
                 <form id="edit-form">
                     <div class="form-group">
@@ -72,6 +86,12 @@
                         <label for="edit-friend-name">Nöbet Arkadaşı (İsteğe Bağlı):</label>
                         <input type="text" id="edit-friend-name" name="edit-friend-name" placeholder="İsim">
                     </div>
+                    
+                    <div class="form-group food-input">
+                        <label for="edit-food-list">Yemek Listesi:</label>
+                        <textarea id="edit-food-list" name="edit-food-list" placeholder="Yemekleri buraya yazın"></textarea>
+                    </div>
+
                     <button type="submit">Kaydet</button>
                     <button type="button" id="delete-shift-btn" class="delete-btn">SİL</button>
                 </form>
