@@ -13,7 +13,7 @@ const fullMonthInputModal = document.getElementById('full-month-input-modal');
 const fullMonthShiftForm = document.getElementById('full-month-shift-form');
 const daysInputList = document.getElementById('days-input-list');
 const editModal = document.getElementById('edit-modal');
-const summaryContainer = document.getElementById('summary-container'); // Yeni
+const summaryContainer = document.getElementById('summary-container'); 
 
 // Ay isimleri
 const monthNames = ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran",
@@ -59,7 +59,6 @@ const getShiftIcon = (hours) => {
     return ''; 
 };
 
-
 // --- Aylık Özet Hesaplama ve Gösterme ---
 const calculateMonthlySummary = (year, month) => {
     let totalHours = 0;
@@ -93,7 +92,6 @@ const calculateMonthlySummary = (year, month) => {
     document.getElementById('summary-free-days').textContent = `${totalFreeDays} Gün`;
 };
 
-
 // --- Takvim Oluşturma Fonksiyonu (Kart Dönüşü İçerir) ---
 const renderCalendar = (date) => {
     calendarEl.innerHTML = '';
@@ -102,7 +100,7 @@ const renderCalendar = (date) => {
 
     currentMonthYearEl.textContent = `${monthNames[month]} ${year}`;
     
-    calculateMonthlySummary(year, month); // Özeti güncelle
+    calculateMonthlySummary(year, month); 
     
     const dayNames = ["Pzt", "Sal", "Çar", "Per", "Cum", "Cmt", "Paz"];
     dayNames.forEach(day => {
@@ -130,8 +128,8 @@ const renderCalendar = (date) => {
         const shiftData = shifts[dateKey];
         const hours = shiftData ? shiftData.hours : 0;
         const friend = shiftData ? shiftData.friend : '';
-        const food = shiftData ? shiftData.food : ''; // Yeni: Yemek listesi
-        
+        const food = shiftData ? shiftData.food : ''; 
+
         // KART CONTAINER'I
         const dayEl = document.createElement('div');
         dayEl.classList.add('calendar-day');
@@ -186,6 +184,7 @@ const renderCalendar = (date) => {
         // KART ARKA YÜZÜ (Yemek Listesi)
         const cardBack = document.createElement('div');
         cardBack.classList.add('day-card-back');
+        // Yeni satır karakterlerini <br> ile değiştirerek listeyi gösteriyoruz
         cardBack.innerHTML = `
             <div class="back-title">🍽️ Yemek Listesi</div>
             <div class="food-text">${food.replace(/\n/g, '<br>') || 'Liste Girilmedi'}</div>
@@ -208,7 +207,7 @@ const renderCalendar = (date) => {
         
         // Kartın dönmüşken arka yüzüne tıklanınca düzenleme modalını aç
         cardBack.addEventListener('click', (e) => {
-            e.stopPropagation(); // Kartın ön yüze dönmesini engeller
+            e.stopPropagation(); 
             openEditModal(dateKey, hours, friend, food);
         });
         
@@ -232,7 +231,7 @@ const openEditModal = (dateKey, hours, friend, food) => {
     
     document.getElementById('edit-hours').value = hours;
     document.getElementById('edit-friend-name').value = friend;
-    document.getElementById('edit-food-list').value = food; // Yeni: Food listesini yükle
+    document.getElementById('edit-food-list').value = food; // Yemek listesini modal'a yükle
 
     editModal.style.display = 'block';
 };
@@ -249,14 +248,14 @@ document.getElementById('edit-form').addEventListener('submit', (e) => {
 
     const newHours = parseInt(document.getElementById('edit-hours').value);
     const newFriend = document.getElementById('edit-friend-name').value.trim();
-    const newFood = document.getElementById('edit-food-list').value.trim(); // Yeni: Food listesini al
+    const newFood = document.getElementById('edit-food-list').value.trim(); 
     
     // Nöbet varsa VEYA yemek listesi girilmişse kaydet
     if (newHours > 0 || newFood !== '') {
         shifts[currentEditingDate] = { 
             hours: newHours, 
             friend: newFriend,
-            food: newFood // Yeni: Food listesini kaydet
+            food: newFood // Yemek listesini kaydet
         };
     } else {
         delete shifts[currentEditingDate]; // Her ikisi de boşsa sil
@@ -281,7 +280,7 @@ document.getElementById('delete-shift-btn').addEventListener('click', () => {
 
 // --- Aylık Giriş Modalı Yönetimi ve İşlemleri ---
 
-// Toplu Giriş Modalındaki Gün Inputlarını Oluşturma (Yeni: Yemek Listesi eklendi)
+// Toplu Giriş Modalındaki Gün Inputlarını Oluşturma (Yemek Listesi Dahil)
 const generateDayInputs = (year, month) => {
     daysInputList.innerHTML = '';
     const daysInMonth = new Date(year, month + 1, 0).getDate();
@@ -292,10 +291,9 @@ const generateDayInputs = (year, month) => {
         const existingShift = shifts[dateKey] || {}; 
         const existingHours = existingShift.hours || 0;
         const existingFriend = existingShift.friend || '';
-        const existingFood = existingShift.food || ''; // Yeni: Yemek listesi
+        const existingFood = existingShift.food || ''; // Yemek listesi
         
         const dayInputGroup = document.createElement('div');
-        // full-day-input-group sınıfı, CSS'teki düzenlemeyi tetikler
         dayInputGroup.classList.add('day-input-group', 'full-day-input-group'); 
         
         const dayName = fullDate.toLocaleDateString('tr-TR', { weekday: 'short' });
@@ -346,7 +344,7 @@ const openFullMonthInputModal = (date) => {
     fullMonthInputModal.style.display = 'block';
 };
 
-// Toplu Giriş Formu Submit Olayı (Yeni: Yemek listesi verisini kaydet)
+// Toplu Giriş Formu Submit Olayı (Yemek listesi kaydı dahil)
 fullMonthShiftForm.addEventListener('submit', (e) => {
     e.preventDefault();
     
@@ -365,12 +363,12 @@ fullMonthShiftForm.addEventListener('submit', (e) => {
         
         const hoursSelect = document.getElementById(`hours-${dateKey}`); 
         const friendInput = document.getElementById(`friend-${dateKey}`); 
-        const foodInput = document.getElementById(`food-${dateKey}`); // Yeni: Food listesi inputu
+        const foodInput = document.getElementById(`food-${dateKey}`); 
 
         if (hoursSelect && foodInput) {
             const hours = parseInt(hoursSelect.value); 
             let friend = friendInput ? friendInput.value.trim() : ''; 
-            const food = foodInput.value.trim(); // Yeni: Food listesini al
+            const food = foodInput.value.trim(); 
 
             if (hours > 0 && friend === '') {
                 friend = defaultFriendName;
