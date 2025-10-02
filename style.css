@@ -63,10 +63,6 @@ button:hover {
     margin-top: 10px;
 }
 
-.delete-btn:hover {
-    background-color: #e6342c;
-}
-
 /* --- Takvim Bölümü Stilleri --- */
 .calendar-container {
     background-color: white;
@@ -244,10 +240,9 @@ button:hover {
     font-family: inherit;
 }
 
-/* --- Toplu Giriş Modal Stilleri (GÜNLÜK GİRİŞ İÇİN DÜZENLENDİ) --- */
+/* --- Toplu Giriş Modal Stilleri (Günlük Yemek Listesi Girişini Destekler) --- */
 #days-input-list {
     display: grid;
-    /* Her bir grid öğesi için daha fazla yer sağlamak için minmax ayarlandı */
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); 
     gap: 10px;
     max-height: 50vh; 
@@ -297,6 +292,32 @@ button:hover {
     padding: 4px 6px;
 }
 
+/* --- Veri Aktarma Butonları Düzeni --- */
+.calendar-actions {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.data-transfer-group {
+    display: flex;
+    gap: 10px;
+}
+
+.transfer-btn {
+    width: 50%;
+    padding: 8px 15px;
+    background-color: #34c759; /* Yeşil tonları */
+}
+.import-btn {
+    background-color: #ff9500; /* Turuncu tonları */
+}
+.transfer-btn:hover {
+    filter: brightness(1.1);
+    transform: translateY(-1px);
+}
+
 
 /* --- Medya Sorguları (Telefon Uyumluluğu) --- */
 @media (max-width: 768px) {
@@ -314,40 +335,15 @@ button:hover {
     .transfer-btn {
         width: 50%;
     }
-    .summary-container {
-        flex-direction: column;
-        align-items: flex-start;
-        padding: 10px 15px;
-    }
-    .summary-item {
-        width: 100%;
-        text-align: left;
-        padding: 5px 0;
-        display: flex;
-        justify-content: space-between;
-    }
-    .day-card-back .food-text {
-        max-height: 40px; 
-        font-size: 0.7em;
-    }
-    /* Toplu Giriş Düzenlemesi */
+    
+    /* Toplu Giriş Düzenlemesi Mobil */
     #days-input-list {
         grid-template-columns: 1fr;
-    }
-    .day-input-group {
-        align-items: stretch;
-    }
-    .daily-inputs {
-        flex-wrap: wrap;
     }
     .daily-inputs select {
         width: 40%; 
     }
     .daily-inputs input[type="text"] {
         width: 55%; 
-    }
-    .daily-inputs textarea {
-        width: 100%;
-        margin-top: 5px;
     }
 }
