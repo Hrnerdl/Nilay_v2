@@ -93,7 +93,7 @@ const calculateMonthlySummary = (year, month) => {
 };
 
 
-// --- Takvim Oluşturma Fonksiyonu ---
+// --- Takvim Oluşturma Fonksiyonu (Kart Dönüşü İçerir) ---
 const renderCalendar = (date) => {
     calendarEl.innerHTML = '';
     const year = date.getFullYear();
@@ -129,7 +129,7 @@ const renderCalendar = (date) => {
         const shiftData = shifts[dateKey];
         const hours = shiftData ? shiftData.hours : undefined;
         const friend = shiftData ? shiftData.friend : '';
-        const food = shiftData ? shiftData.food : ''; 
+        const food = shiftData ? shiftData.food : ''; // Yemek listesi
 
         // KART CONTAINER'I
         const dayEl = document.createElement('div');
@@ -251,7 +251,7 @@ document.getElementById('edit-form').addEventListener('submit', (e) => {
 
     const newHours = parseInt(document.getElementById('edit-hours').value);
     const newFriend = document.getElementById('edit-friend-name').value.trim();
-    const newFood = document.getElementById('edit-food-list').value.trim();
+    const newFood = document.getElementById('edit-food-list').value.trim(); 
     
     // Nöbet varsa VEYA yemek listesi girilmişse kaydet
     if (newHours > 0 || newFood !== '') {
@@ -281,7 +281,7 @@ document.getElementById('delete-shift-btn').addEventListener('click', () => {
     }
 });
 
-// --- Aylık Giriş Modalı Yönetimi ve İşlemleri ---
+// --- Aylık Giriş Modalı Yönetimi ve İşlemleri (Günlük Yemek Girişi dahil) ---
 
 // Toplu Giriş Modalındaki Gün Inputlarını Oluşturma
 const generateDayInputs = (year, month) => {
