@@ -25,9 +25,15 @@
                 <h2 id="current-month-year"></h2>
                 <button id="next-month"> &gt; </button>
             </div>
-            <div class="calendar" id="calendar">
-                </div>
+            <div class="calendar" id="calendar"></div>
             <button id="reopen-input-modal-btn" class="edit-all-btn">Tüm Ayı Toplu Düzenle</button>
+
+            <!-- JSON Veri İşlemleri -->
+            <div class="json-buttons">
+                <button id="export-json-btn">JSON Olarak İndir</button>
+                <input type="file" id="import-json-input" accept="application/json" style="display:none">
+                <button id="import-json-btn">JSON Yükle</button>
+            </div>
         </section>
 
         <div id="full-month-input-modal" class="modal">
