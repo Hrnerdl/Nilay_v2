@@ -36,6 +36,57 @@ main {
     display: none !important;
 }
 
+/* --- Modal Temel Stili --- */
+.modal {
+    display: none; 
+    position: fixed;
+    z-index: 10; 
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.5);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 10% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 90%;
+    max-width: 450px;
+    border-radius: 15px;
+    position: relative;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.large-modal {
+    max-width: 800px; 
+}
+
+.close-button {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    position: absolute;
+    right: 15px;
+    top: 5px;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: #333;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+
 /* --- Genel Buton Stili --- */
 button {
     background-color: #007aff; 
@@ -258,14 +309,10 @@ button:hover {
 }
 
 /* --- Toplu Giriş Modal Stilleri (Düzeltildi) --- */
-.large-modal {
-    max-width: 800px; 
-}
-
 #days-input-list {
     display: grid;
     /* 400px altına düşmeyecek, iki kolonlu düzen */
-    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); 
+    grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); 
     gap: 10px;
     max-height: 50vh; 
     overflow-y: scroll;
@@ -314,7 +361,7 @@ button:hover {
 /* Masaüstü Görünümü (Geniş Ekran) - inputları yan yana sığdır */
 @media (min-width: 600px) {
     .daily-inputs {
-        flex-direction: row; /* Select ve input[text]'i yan yana getir */
+        flex-direction: row; 
         flex-wrap: wrap; 
         align-items: flex-start;
     }
@@ -386,6 +433,9 @@ button:hover {
 @media (max-width: 768px) {
     main {
         padding: 0 5px;
+    }
+    .modal-content {
+        margin: 5% auto;
     }
     .calendar-container {
         border-radius: 0; 
