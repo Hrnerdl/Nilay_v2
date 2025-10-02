@@ -441,6 +441,13 @@ button:hover {
     overflow: hidden;
     text-overflow: ellipsis;
 }
+#info-modal pre {
+    background: #f7f7f7;
+    padding: 8px;
+    border-radius: 6px;
+    white-space: pre-wrap;
+}
 
 }
+
 
