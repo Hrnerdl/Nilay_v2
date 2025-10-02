@@ -419,6 +419,6 @@ button:hover {
         max-width: 95%;
     }
     #days-input-list {
-        grid-template-columns: 1fr; /* Tek sütuna düşür */
+        grid-template-columns: 1fr; 
     }
 }
