@@ -256,7 +256,7 @@ button:hover {
     min-height: 80px;
 }
 
-/* --- Toplu Giriş Modal Stilleri (Düzenlendi) --- */
+/* --- Toplu Giriş Modal Stilleri (Düzeltildi) --- */
 .large-modal {
     max-width: 800px; 
 }
@@ -276,7 +276,6 @@ button:hover {
     background-color: #ffffff;
     border-radius: 8px;
     border: 1px solid #e0e0e0; 
-    /* Dikey sıralama için flex-direction: column eklendi */
     display: flex;
     flex-direction: column; 
     align-items: flex-start;
@@ -289,36 +288,51 @@ button:hover {
     width: 100%;
 }
 
+/* Mobil Öncelikli Düzenleme: Tüm elementler alt alta ve tam genişlikte */
 .daily-inputs {
     display: flex;
-    flex-wrap: wrap; 
+    flex-direction: column; 
     gap: 5px;
     width: 100%;
 }
 
-/* Düzeltme: Select ve text inputun yan yana durmasını sağlar */
-.daily-inputs select {
-    width: 30%; /* Select input için sabit genişlik */
-    flex-shrink: 0;
+.daily-inputs select,
+.daily-inputs input[type="text"],
+.daily-inputs textarea {
+    width: 100%; 
+    box-sizing: border-box;
+    margin: 0; 
 }
-
-.daily-inputs input[type="text"] {
-    width: calc(70% - 5px); /* Kalan boşluğu doldurur */
-    flex-grow: 0; /* Büyümesini engeller */
-    min-width: 80px;
-    padding: 6px 8px;
-}
-/* Düzeltme sonu */
 
 .daily-inputs textarea {
-    width: 100%; /* Bir alt satıra geçip tam genişliği alır */
     min-height: 35px;
-    margin-top: 5px;
     font-size: 0.8em;
     padding: 4px 6px;
 }
 
+/* Masaüstü Görünümü (Geniş Ekran) */
+@media (min-width: 600px) {
+    .daily-inputs {
+        flex-direction: row; /* Select ve input[text]'i yan yana getir */
+        flex-wrap: wrap; 
+        align-items: flex-start;
+    }
 
+    .daily-inputs select {
+        width: 120px; 
+        flex-shrink: 0;
+    }
+
+    .daily-inputs input[type="text"] {
+        flex-grow: 1; 
+        width: auto;
+    }
+    
+    .daily-inputs textarea {
+        flex-basis: 100%; /* Yeni satıra geçmesini garanti eder */
+        margin-top: 5px;
+    }
+}
 /* --- Veri Aktarma Butonları Düzeni --- */
 .calendar-actions {
     margin-top: 20px;
@@ -397,24 +411,11 @@ button:hover {
         max-height: 40px; 
         font-size: 0.7em;
     }
-    /* Toplu Giriş Düzenlemesi Mobil (Tek kolona düşer) */
+    /* Modal içeriği için genişlik ayarlaması */
     .large-modal {
         max-width: 95%;
     }
     #days-input-list {
-        grid-template-columns: 1fr;
-    }
-    .daily-inputs {
-        flex-wrap: wrap;
-    }
-    .daily-inputs select {
-        width: 40%; 
-    }
-    .daily-inputs input[type="text"] {
-        width: calc(60% - 5px); /* Kalan boşluğu doldurur */
-    }
-    .daily-inputs textarea {
-        width: 100%;
-        margin-top: 5px;
+        grid-template-columns: 1fr; /* Tek sütuna düşür */
     }
 }
