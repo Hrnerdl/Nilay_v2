@@ -13,7 +13,7 @@ const fullMonthInputModal = document.getElementById('full-month-input-modal');
 const fullMonthShiftForm = document.getElementById('full-month-shift-form');
 const daysInputList = document.getElementById('days-input-list');
 const editModal = document.getElementById('edit-modal');
-const summaryContainer = document.getElementById('summary-container'); // Özet bilgileri göstermek için ekledim
+const summaryContainer = document.getElementById('summary-container'); 
 
 // Ay isimleri
 const monthNames = ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran",
@@ -92,7 +92,7 @@ const calculateMonthlySummary = (year, month) => {
     document.getElementById('summary-free-days').textContent = `${totalFreeDays} Gün`;
 };
 
-// --- Takvim Oluşturma Fonksiyonu (Kart Dönüşü ve Yemek Alanı Eklendi) ---
+// --- Takvim Oluşturma Fonksiyonu (Kart Dönüşü İçerir) ---
 const renderCalendar = (date) => {
     calendarEl.innerHTML = '';
     const year = date.getFullYear();
@@ -100,7 +100,7 @@ const renderCalendar = (date) => {
 
     currentMonthYearEl.textContent = `${monthNames[month]} ${year}`;
     
-    calculateMonthlySummary(year, month); // Özet bilgiyi her seferinde hesapla/göster
+    calculateMonthlySummary(year, month); 
     
     const dayNames = ["Pzt", "Sal", "Çar", "Per", "Cum", "Cmt", "Paz"];
     dayNames.forEach(day => {
@@ -128,14 +128,14 @@ const renderCalendar = (date) => {
         const shiftData = shifts[dateKey];
         const hours = shiftData ? shiftData.hours : 0;
         const friend = shiftData ? shiftData.friend : '';
-        const food = shiftData ? shiftData.food : ''; // YENİ: Yemek Listesi
+        const food = shiftData ? shiftData.food : ''; 
 
         // KART CONTAINER'I
         const dayEl = document.createElement('div');
         dayEl.classList.add('calendar-day');
         dayEl.setAttribute('data-date', dateKey); 
 
-        // KART İÇİ DÖNÜŞ YAPISI EKLENDİ
+        // KART İÇİ DÖNÜŞ YAPISI
         const cardInner = document.createElement('div');
         cardInner.classList.add('day-card-inner');
         dayEl.appendChild(cardInner);
@@ -181,7 +181,7 @@ const renderCalendar = (date) => {
             cardFront.appendChild(emojiEl);
         }
         
-        // KART ARKA YÜZÜ (Yemek Listesi) EKLENDİ
+        // KART ARKA YÜZÜ (Yemek Listesi)
         const cardBack = document.createElement('div');
         cardBack.classList.add('day-card-back');
         cardBack.innerHTML = `
@@ -193,7 +193,7 @@ const renderCalendar = (date) => {
 
         // Karta tıklayınca dönme ve düzenleme modalını açma
         dayEl.addEventListener('click', (e) => {
-            const isEditShortcut = e.ctrlKey || e.metaKey; // Ctrl/Cmd tuşu basılıysa
+            const isEditShortcut = e.ctrlKey || e.metaKey; 
 
             if (isEditShortcut || food === '') {
                 // Yemek listesi boşsa veya kısayol tuşuna basıldıysa modalı aç
@@ -206,7 +206,7 @@ const renderCalendar = (date) => {
         
         // Kartın dönmüşken arka yüzüne tıklanınca düzenleme modalını aç
         cardBack.addEventListener('click', (e) => {
-            e.stopPropagation(); // Üst elemana (dayEl) tıklama olayını engelle
+            e.stopPropagation(); 
             openEditModal(dateKey, hours, friend, food);
         });
         
@@ -217,7 +217,7 @@ const renderCalendar = (date) => {
     }
 };
 
-// --- Tek Gün Düzenleme Modalı Fonksiyonları (Yemek Alanı Eklendi) ---
+// --- Tek Gün Düzenleme Modalı Fonksiyonları ---
 
 let currentEditingDate = null;  
 
@@ -230,8 +230,7 @@ const openEditModal = (dateKey, hours, friend, food) => {
     
     document.getElementById('edit-hours').value = hours;
     document.getElementById('edit-friend-name').value = friend;
-    document.getElementById('edit-food-list').value = food; // YENİ: Yemek listesini yükle
-    
+    document.getElementById('edit-food-list').value = food; 
 
     editModal.style.display = 'block';
 };
@@ -241,24 +240,24 @@ const closeEditModal = () => {
     currentEditingDate = null;
 };
 
-// Tek Gün Kaydetme Formu (Yemek Alanı Eklendi)
+// Tek Gün Kaydetme Formu
 document.getElementById('edit-form').addEventListener('submit', (e) => {
     e.preventDefault();
     if (!currentEditingDate) return;
 
     const newHours = parseInt(document.getElementById('edit-hours').value);
     const newFriend = document.getElementById('edit-friend-name').value.trim();
-    const newFood = document.getElementById('edit-food-list').value.trim(); // YENİ: Yemek listesini al
+    const newFood = document.getElementById('edit-food-list').value.trim(); 
     
     // Nöbet varsa VEYA yemek listesi girilmişse kaydet
     if (newHours > 0 || newFood !== '') {
         shifts[currentEditingDate] = { 
             hours: newHours, 
             friend: newFriend,
-            food: newFood // YENİ: Kaydet
+            food: newFood 
         };
     } else {
-        delete shifts[currentEditingDate]; // Hiçbiri yoksa kaydı sil
+        delete shifts[currentEditingDate]; 
     }
 
     saveShifts();
@@ -266,8 +265,7 @@ document.getElementById('edit-form').addEventListener('submit', (e) => {
     closeEditModal();
 });
 
-
-// Tek Gün Silme Butonu (Değişiklik yok)
+// Tek Gün Silme Butonu
 document.getElementById('delete-shift-btn').addEventListener('click', () => {
     if (!currentEditingDate) return;
 
@@ -279,9 +277,9 @@ document.getElementById('delete-shift-btn').addEventListener('click', () => {
     }
 });
 
-// --- Aylık Giriş Modalı Yönetimi ve İşlemleri (Yemek Alanı Eklendi) ---
+// --- Aylık Giriş Modalı Yönetimi ve İşlemleri ---
 
-// Toplu Giriş Modalındaki Gün Inputlarını Oluşturma (Yemek Alanı Eklendi)
+// Toplu Giriş Modalındaki Gün Inputlarını Oluşturma
 const generateDayInputs = (year, month) => {
     daysInputList.innerHTML = '';
     const daysInMonth = new Date(year, month + 1, 0).getDate();
@@ -292,7 +290,7 @@ const generateDayInputs = (year, month) => {
         const existingShift = shifts[dateKey] || {}; 
         const existingHours = existingShift.hours || 0;
         const existingFriend = existingShift.friend || '';
-        const existingFood = existingShift.food || ''; // YENİ: Mevcut yemek listesini al
+        const existingFood = existingShift.food || ''; 
 
         const dayInputGroup = document.createElement('div');
         dayInputGroup.classList.add('day-input-group', 'full-day-input-group'); 
@@ -315,7 +313,7 @@ const generateDayInputs = (year, month) => {
         // 3. Friend Input
         const friendInputHtml = `<input type="text" id="friend-${dateKey}" name="friend-${dateKey}" placeholder="İsim" value="${existingFriend}">`;
 
-        // 4. Food Input (TEXTAREA olarak) EKLENDİ
+        // 4. Food Input (TEXTAREA olarak)
         const foodInputHtml = `<textarea id="food-${dateKey}" name="food-${dateKey}" placeholder="Yemek Listesi">${existingFood}</textarea>`;
 
 
@@ -345,7 +343,7 @@ const openFullMonthInputModal = (date) => {
     fullMonthInputModal.style.display = 'block';
 };
 
-// Toplu Giriş Formu Submit Olayı (Yemek Alanı Eklendi)
+// Toplu Giriş Formu Submit Olayı
 fullMonthShiftForm.addEventListener('submit', (e) => {
     e.preventDefault();
     
@@ -364,12 +362,12 @@ fullMonthShiftForm.addEventListener('submit', (e) => {
         
         const hoursSelect = document.getElementById(`hours-${dateKey}`); 
         const friendInput = document.getElementById(`friend-${dateKey}`); 
-        const foodInput = document.getElementById(`food-${dateKey}`); // YENİ: Yemek inputu
+        const foodInput = document.getElementById(`food-${dateKey}`); 
 
         if (hoursSelect && foodInput) {
             const hours = parseInt(hoursSelect.value); 
             let friend = friendInput ? friendInput.value.trim() : ''; 
-            const food = foodInput.value.trim(); // YENİ: Yemek listesini al
+            const food = foodInput.value.trim(); 
 
             if (hours > 0 && friend === '') {
                 friend = defaultFriendName;
@@ -402,7 +400,7 @@ document.getElementById('input-month').addEventListener('change', (e) => {
 });
 
 
-// --- Veri Aktarma Fonksiyonları (JSON) EKLENDİ ---
+// --- Veri Aktarma Fonksiyonları (JSON) ---
 
 const exportData = () => {
     const dataStr = JSON.stringify(shifts, null, 2);
@@ -459,7 +457,7 @@ const importData = (event) => {
 };
 
 
-// --- Olay Dinleyicileri ve Başlatma (JSON Butonları Eklendi) ---
+// --- Olay Dinleyicileri ve Başlatma ---
 document.getElementById('export-data-btn').addEventListener('click', exportData);
 document.getElementById('import-data-btn').addEventListener('click', () => {
     document.getElementById('import-file-input').click();
