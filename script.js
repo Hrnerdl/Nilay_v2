@@ -292,4 +292,218 @@ const generateDayInputs = (year, month) => {
         const fullDate = new Date(year, month, day);
         const dateKey = formatDate(fullDate);
         const existingShift = shifts[dateKey] || {}; 
-        const existingHours = existingShift.hours ||
+        const existingHours = existingShift.hours || 0;
+        const existingFriend = existingShift.friend || '';
+        const existingFood = existingShift.food || ''; // Mevcut yemek listesini al
+
+        const dayInputGroup = document.createElement('div');
+        dayInputGroup.classList.add('day-input-group', 'full-day-input-group'); 
+        
+        const dayName = fullDate.toLocaleDateString('tr-TR', { weekday: 'short' });
+        
+        // 1. Label
+        const labelHtml = `<label for="hours-${dateKey}">
+                             ${day}. ${monthNames[month].substring(0, 3)} (${dayName})
+                           </label>`;
+
+        // 2. Select (Saat)
+        let selectHtml = `<select id="hours-${dateKey}" name="hours-${dateKey}">`;
+        SHIFT_OPTIONS.forEach(option => {
+            const selected = (option.value === existingHours) ? 'selected' : '';
+            selectHtml += `<option value="${option.value}" ${selected}>${option.label}</option>`;
+        });
+        selectHtml += `</select>`;
+
+        // 3. Friend Input
+        const friendInputHtml = `<input type="text" id="friend-${dateKey}" name="friend-${dateKey}" placeholder="İsim" value="${existingFriend}">`;
+
+        // 4. Food Input (TEXTAREA olarak)
+        const foodInputHtml = `<textarea id="food-${dateKey}" name="food-${dateKey}" placeholder="Yemek Listesi">${existingFood}</textarea>`;
+
+
+        dayInputGroup.innerHTML = `
+            ${labelHtml}
+            <div class="daily-inputs">
+                ${selectHtml}
+                ${friendInputHtml}
+                ${foodInputHtml}
+            </div>
+        `;
+        daysInputList.appendChild(dayInputGroup);
+    }
+};
+
+const openFullMonthInputModal = (date) => {
+    document.getElementById('default-friend-name').value = '';  
+
+    const year = date.getFullYear();
+    const month = date.getMonth();
+
+    const monthKey = `${year}-${String(month + 1).padStart(2, '0')}`;
+    document.getElementById('input-month').value = monthKey;
+    document.getElementById('modal-month-name').textContent = monthNames[month];
+
+    generateDayInputs(year, month);
+    fullMonthInputModal.style.display = 'block';
+};
+
+// Toplu Giriş Formu Submit Olayı
+fullMonthShiftForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    
+    const selectedMonth = document.getElementById('input-month').value;
+    const [yearStr, monthStr] = selectedMonth.split('-');
+    const year = parseInt(yearStr);
+    const month = parseInt(monthStr) - 1;  
+    
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    
+    const defaultFriendName = document.getElementById('default-friend-name').value.trim();
+
+    for (let day = 1; day <= daysInMonth; day++) {
+        const fullDate = new Date(year, month, day);
+        const dateKey = formatDate(fullDate);
+        
+        const hoursSelect = document.getElementById(`hours-${dateKey}`); 
+        const friendInput = document.getElementById(`friend-${dateKey}`); 
+        const foodInput = document.getElementById(`food-${dateKey}`); 
+
+        if (hoursSelect && foodInput) {
+            const hours = parseInt(hoursSelect.value); 
+            let friend = friendInput ? friendInput.value.trim() : ''; 
+            const food = foodInput.value.trim(); 
+
+            if (hours > 0 && friend === '') {
+                friend = defaultFriendName;
+            }
+            
+            // Nöbet varsa VEYA yemek listesi girilmişse kaydet
+            if (hours > 0 || food !== '') {
+                shifts[dateKey] = { hours: hours, friend: friend, food: food };
+            } else {
+                delete shifts[dateKey];
+            }
+        }
+    }
+    
+    saveShifts();
+    fullMonthInputModal.style.display = 'none';
+    
+    currentMonth = new Date(year, month, 1);
+    renderCalendar(currentMonth);
+    
+    startSection.classList.add('hidden');
+    calendarView.classList.remove('hidden');
+});
+
+document.getElementById('input-month').addEventListener('change', (e) => {
+    const [year, month] = e.target.value.split('-').map(Number);
+    const date = new Date(year, month - 1, 1);
+    document.getElementById('modal-month-name').textContent = monthNames[month - 1];
+    generateDayInputs(date.getFullYear(), date.getMonth());
+});
+
+
+// --- Veri Aktarma Fonksiyonları (JSON) ---
+
+const exportData = () => {
+    const dataStr = JSON.stringify(shifts, null, 2);
+    const blob = new Blob([dataStr], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `nobet-takip-yedek-${new Date().toLocaleDateString('tr-TR')}.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    alert('Nöbet verileri başarıyla indirildi!');
+};
+
+const importData = (event) => {
+    const file = event.target.files[0];
+    if (!file) {
+        return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+        try {
+            const importedShifts = JSON.parse(e.target.result);
+            
+            if (typeof importedShifts === 'object' && Object.keys(importedShifts).length > 0) {
+                shifts = importedShifts;
+                saveShifts();
+                
+                const lastDate = Object.keys(shifts).sort().pop();
+                if (lastDate) {
+                    const [year, month] = lastDate.split('-').map(Number);
+                    currentMonth = new Date(year, month - 1, 1);
+                }
+                
+                renderCalendar(currentMonth);
+                alert('Nöbet verileri başarıyla yüklendi ve takvim güncellendi!');
+                
+                startSection.classList.add('hidden');
+                calendarView.classList.remove('hidden');
+
+            } else {
+                alert('Yüklenen dosya geçerli bir nöbet verisi (JSON) içermiyor.');
+            }
+        } catch (error) {
+            console.error("Veri yükleme hatası:", error);
+            alert('Dosya okunurken bir hata oluştu. Lütfen dosyanın doğru formatta (JSON) olduğundan emin olun.');
+        }
+    };
+    reader.readAsText(file);
+};
+
+
+// --- Olay Dinleyicileri ve Başlatma ---
+document.getElementById('export-data-btn').addEventListener('click', exportData);
+document.getElementById('import-data-btn').addEventListener('click', () => {
+    document.getElementById('import-file-input').click();
+});
+document.getElementById('import-file-input').addEventListener('change', importData);
+document.getElementById('open-input-modal-btn').addEventListener('click', () => {
+    openFullMonthInputModal(new Date());
+});
+document.getElementById('reopen-input-modal-btn').addEventListener('click', () => {
+    openFullMonthInputModal(currentMonth);
+});
+document.getElementById('prev-month').addEventListener('click', () => {
+    currentMonth.setMonth(currentMonth.getMonth() - 1);
+    renderCalendar(currentMonth);
+});
+document.getElementById('next-month').addEventListener('click', () => {
+    currentMonth.setMonth(currentMonth.getMonth() + 1);
+    renderCalendar(currentMonth);
+});
+document.querySelector('.full-month-close-btn').addEventListener('click', () => fullMonthInputModal.style.display = 'none');
+document.querySelector('.edit-close-btn').addEventListener('click', closeEditModal);
+window.addEventListener('click', (event) => {
+    if (event.target === fullMonthInputModal) {
+        fullMonthInputModal.style.display = 'none';
+    } else if (event.target === editModal) {
+        closeEditModal();
+    }
+});
+
+// Uygulamayı Başlat
+document.addEventListener('DOMContentLoaded', () => {
+    if (Object.keys(shifts).length > 0) {
+        const lastDate = Object.keys(shifts).sort().pop();
+        if (lastDate) {
+            const [year, month] = lastDate.split('-').map(Number);
+            currentMonth = new Date(year, month - 1, 1);
+        }
+        
+        startSection.classList.add('hidden');
+        calendarView.classList.remove('hidden');
+        renderCalendar(currentMonth);
+    } else {
+        startSection.classList.remove('hidden');
+        calendarView.classList.add('hidden');
+    }
+});
