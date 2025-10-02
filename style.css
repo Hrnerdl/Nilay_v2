@@ -7,6 +7,10 @@ body {
     background-color: #f8f8f8; /* Çok açık gri arkaplan */
     color: #333;
     line-height: 1.4;
+    /* Mobil Sayfa Yüksekliğini Düzeltmek İçin */
+    height: 100vh;
+    box-sizing: border-box;
+    overflow-x: hidden; /* Yatay Kaydırmayı Engelle */
 }
 
 header {
@@ -37,12 +41,12 @@ main {
     display: none !important;
 }
 
-/* --- Giriş Başlatma Ekranı Stili --- */
+/* --- Giriş Başlatma Ekranı Stili --- (Değişiklik yapılmadı) */
 .start-section {
     text-align: center;
     margin: 40vh auto 0; /* Sayfanın ortasına yakın başlama */
     padding: 30px;
-    background-color: transparent; /* Şeffaf arkaplan */
+    background-color: transparent; 
     max-width: 300px;
 }
 
@@ -51,7 +55,7 @@ main {
     color: #666;
 }
 
-/* --- Genel Buton Stili (iOS Action Benzeri) --- */
+/* --- Genel Buton Stili (iOS Action Benzeri) --- (Değişiklik yapılmadı) */
 button {
     background-color: #007aff; /* iOS Mavi Rengi */
     color: white;
@@ -74,7 +78,7 @@ button:hover {
 
 .delete-btn {
     background-color: #ff3b30; /* iOS Kırmızı Rengi */
-    margin-left: 0; /* Mobil düzende yan yana olmasın */
+    margin-left: 0; 
     margin-top: 10px;
 }
 
@@ -86,8 +90,10 @@ button:hover {
 .calendar-container {
     background-color: white;
     padding: 15px;
-    border-radius: 12px; /* Yumuşak kart köşeleri */
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* Belirgin kart gölgesi */
+    border-radius: 12px; 
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); 
+    /* Mobil cihazlar için dikey alandan kazanmak amacıyla max-height eklendi */
+    /* Daha sonra media query'de tamamen esnek yapacağız */
 }
 
 .calendar-header {
@@ -142,7 +148,7 @@ button:hover {
 .calendar-day {
     background-color: #f9f9f9;
     cursor: pointer;
-    min-height: 85px; 
+    min-height: 85px; /* Masaüstü için varsayılan yükseklik */
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -172,36 +178,42 @@ button:hover {
 
 /* Nöbet Bilgisi */
 .shift-info {
-    font-size: 0.8em;
+    font-size: 0.75em; /* Nöbet bilgisini küçülttük */
     font-weight: 700;
     color: white;
-    padding: 4px 6px;
+    padding: 3px 5px; /* Dikey boşluğu azalttık */
     border-radius: 6px;
-    margin-top: 2px; /* friend-info'dan önce hafif boşluk */
+    margin-top: 1px; /* Boşluğu azalttık */
     width: 90%;
     box-sizing: border-box;
     margin-bottom: 0;
+    /* Taşan metni kesmek için */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    /* Dikey patlamayı engellemek için max-height eklendi */
+    max-height: 1.2em; 
 }
 
-/* Yeni: Takvimdeki Nöbet Arkadaşı Bilgisi Stili */
+/* Nöbet Arkadaşı Bilgisi Stili */
 .friend-info {
-    font-size: 0.7em; /* Nöbet saatinden biraz daha küçük */
+    font-size: 0.65em; /* Nöbet saatinden daha küçük */
     font-weight: 500;
-    color: #333; /* Daha yumuşak bir renk */
-    background-color: rgba(255, 255, 255, 0.8); /* Şeffaf beyaz arkaplan */
+    color: #333; 
+    background-color: rgba(255, 255, 255, 0.8); 
     padding: 2px 4px;
     border-radius: 4px;
-    margin-top: 2px;
+    margin-top: 1px; /* Boşluğu azalttık */
     width: 90%;
     box-sizing: border-box;
+    /* Taşan metni kesmek için */
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
-    margin-bottom: 5px; /* Alt boşluk */
+    margin-bottom: 2px; /* Alt boşluğu azalttık */
 }
-/* /Yeni */
 
-/* --- NÖBET SAATİNE GÖRE RENKLER --- */
+/* --- NÖBET SAATİNE GÖRE RENKLER --- (Değişiklik yapılmadı) */
 .shift-8 {
     background-color: #3498db; 
     box-shadow: 0 2px 4px rgba(52, 152, 219, 0.4);
@@ -248,7 +260,7 @@ button:hover {
 }
 
 
-/* --- Modal Stilleri --- */
+/* --- Modal Stilleri --- (Değişiklik yapılmadı) */
 .modal {
     display: none; 
     position: fixed;
@@ -295,7 +307,7 @@ button:hover {
     font-weight: 300; 
 }
 
-/* --- Select Menü ve Input Stilleri (YENİ) --- */
+/* --- Select Menü ve Input Stilleri --- (Değişiklik yapılmadı) */
 .form-group select, 
 .month-selector input[type="month"],
 .form-group input[type="text"] {
@@ -305,7 +317,7 @@ button:hover {
     border: 1px solid #ccc;
     border-radius: 6px;
     background-color: #f9f9f9;
-    appearance: none; /* Varsayılan stil okunu kaldır */
+    appearance: none; 
     -webkit-appearance: none;
     -moz-appearance: none;
     background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path fill="gray" d="M7 10l5 5 5-5z"/></svg>');
@@ -318,21 +330,21 @@ button:hover {
 .friend-input input[type="text"] {
     width: 100%;
     box-sizing: border-box;
-    background-image: none; /* Text input'tan ok ikonunu kaldır */
+    background-image: none; 
     padding-right: 8px;
 }
 
 /* Toplu Giriş Modalındaki Select'ler */
 .day-input-group select {
-    width: 120px; /* Daha dar bir genişlik veriyoruz */
+    width: 120px; 
     text-align: center;
     font-size: 0.9em;
-    padding-right: 30px; /* Ok için alan */
+    padding-right: 30px; 
 }
 
-/* Yeni: Tekli Gün Input Grubu içindeki Arkadaş İsmi Input'u */
+/* Tekli Gün Input Grubu içindeki Arkadaş İsmi Input'u */
 .day-input-group input[type="text"] {
-    width: 100px; /* Select'in yanına sığması için daralt */
+    width: 100px; 
     text-align: center;
     padding: 6px 4px;
     font-size: 0.85em;
@@ -340,10 +352,10 @@ button:hover {
 }
 
 
-/* --- Toplu Giriş Modal Stilleri --- */
+/* --- Toplu Giriş Modal Stilleri --- (Değişiklik yapılmadı) */
 #days-input-list {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Genişlik arttı */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
     gap: 10px;
     max-height: 50vh; 
     overflow-y: scroll;
@@ -379,6 +391,8 @@ button:hover {
 @media (max-width: 768px) {
     main {
         padding: 0 5px;
+        /* Mobil görünümde takvimin dikey alanda daha fazla esnemesini sağlamak için margin azaltıldı */
+        margin: 10px auto; 
     }
     header {
         padding: 15px 10px;
@@ -394,9 +408,26 @@ button:hover {
     #days-input-list {
         grid-template-columns: 1fr;
     }
-    /* Yeni: Mobil görünüme uyum */
+    
+    /* Mobil: Takvim Gün Yüksekliğini Küçültme */
+    .calendar-day {
+        min-height: 70px; /* Dikey alandan kazanç */
+        padding: 5px 3px; /* İç boşluk azaltıldı */
+    }
+
+    /* Mobil: Nöbet ve Arkadaş Bilgisini Daha Dar Alana Sığdırma */
+    .shift-info {
+        font-size: 0.7em; 
+        padding: 2px 4px;
+    }
+    .friend-info {
+        font-size: 0.6em; 
+        padding: 1px 3px;
+    }
+
+    /* Toplu Giriş Modalındaki Alanlar */
     .day-input-group {
-        flex-wrap: wrap; /* Mobil alt alta sığdırmak için */
+        flex-wrap: wrap; 
     }
     .day-input-group label {
         width: 100%;
@@ -404,7 +435,7 @@ button:hover {
     }
     .day-input-group select, 
     .day-input-group input[type="text"] {
-        width: 48%; /* Yan yana durmaları için */
+        width: 48%; 
         box-sizing: border-box;
     }
     .day-input-group select {
@@ -413,5 +444,4 @@ button:hover {
     .day-input-group input[type="text"] {
         width: 48%;
     }
-    /* /Yeni */
 }
