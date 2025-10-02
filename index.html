@@ -27,7 +27,18 @@
             </div>
             <div class="calendar" id="calendar">
                 </div>
-            <button id="reopen-input-modal-btn" class="edit-all-btn">Tüm Ayı Toplu Düzenle</button>
+            
+            <div class="calendar-actions">
+                <button id="reopen-input-modal-btn" class="edit-all-btn">Tüm Ayı Toplu Düzenle</button>
+                <div class="data-transfer-group">
+                    <button id="export-data-btn" class="transfer-btn export-btn">Veriyi İndir (JSON)</button>
+                    <input type="file" id="import-file-input" accept=".json" style="display: none;">
+                    <button id="import-data-btn" class="transfer-btn import-btn">Veri Yükle (JSON)</button>
+                </div>
+            </div>
+            <div class="summary-container" id="summary-container">
+                </div>
+            
         </section>
 
         <div id="full-month-input-modal" class="modal">
