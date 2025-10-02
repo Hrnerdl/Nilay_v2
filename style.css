@@ -234,7 +234,7 @@ button:hover {
     padding: 0;
 }
 
-/* GÜNCELLENDİ: Gülen Yüz Rengine Uygun Stil */
+/* Gülen Yüz Rengine Uygun Stil */
 .free-day-emoji { 
     font-size: 1.5em; 
     margin-top: auto; 
@@ -248,8 +248,89 @@ button:hover {
     z-index: 1;
 }
 
+/* --- YENİ: Takvim Altı Butonları ve Özet Alanı Stilleri --- */
 
-/* --- Modal Stilleri --- */
+.calendar-actions {
+    display: flex;
+    flex-direction: column; 
+    gap: 10px;
+    margin-top: 20px;
+    padding-top: 10px;
+    border-top: 1px solid #eee;
+}
+
+.data-transfer-group {
+    display: flex;
+    gap: 10px;
+}
+
+.transfer-btn {
+    width: 50%; /* Yan yana iki buton */
+    margin-top: 0;
+    padding: 10px 15px;
+    font-size: 0.9em;
+    box-shadow: none;
+}
+
+.export-btn {
+    background-color: #34c759; /* Yeşil */
+    box-shadow: 0 3px 6px rgba(52, 199, 89, 0.3);
+}
+
+.export-btn:hover {
+    background-color: #2da44c;
+}
+
+.import-btn {
+    background-color: #ff9500; /* Turuncu */
+    box-shadow: 0 3px 6px rgba(255, 149, 0, 0.3);
+}
+.import-btn:hover {
+    background-color: #e08300;
+}
+
+.edit-all-btn {
+    background-color: #5856d6; 
+    box-shadow: 0 3px 6px rgba(88, 86, 214, 0.3);
+}
+
+.edit-all-btn:hover {
+    background-color: #4846c4;
+}
+
+/* YENİ: Aylık Özet Stili */
+.summary-container {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #f0f0f0; /* Hafif gri arkaplan */
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    font-size: 0.95em;
+    font-weight: 500;
+    color: #333;
+}
+
+.summary-item {
+    text-align: center;
+    flex: 1;
+    padding: 0 5px;
+}
+
+.summary-item strong {
+    display: block;
+    font-weight: 600;
+    color: #000;
+}
+
+.summary-item span {
+    font-size: 1.1em;
+    font-weight: 700;
+    color: #007aff; /* Mavi vurgu */
+}
+
+/* --- Modal Stilleri (Aynı) --- */
 .modal {
     display: none; 
     position: fixed;
@@ -296,7 +377,7 @@ button:hover {
     font-weight: 300; 
 }
 
-/* --- Select Menü ve Input Stilleri --- */
+/* --- Select Menü ve Input Stilleri (Aynı) --- */
 .form-group select, 
 .month-selector input[type="month"],
 .form-group input[type="text"] {
@@ -314,7 +395,6 @@ button:hover {
     padding-right: 30px;
 }
 
-/* Tek Gün Düzenleme Modalındaki Arkadaş İsmi Input'u */
 .friend-input input[type="text"] {
     width: 100%;
     box-sizing: border-box;
@@ -322,7 +402,6 @@ button:hover {
     padding-right: 8px;
 }
 
-/* Toplu Giriş Modalındaki Select'ler */
 .day-input-group select {
     width: 120px; 
     text-align: center;
@@ -330,7 +409,6 @@ button:hover {
     padding-right: 30px; 
 }
 
-/* Tekli Gün Input Grubu içindeki Arkadaş İsmi Input'u */
 .day-input-group input[type="text"] {
     width: 100px; 
     text-align: center;
@@ -340,7 +418,7 @@ button:hover {
 }
 
 
-/* --- Toplu Giriş Modal Stilleri --- */
+/* --- Toplu Giriş Modal Stilleri (Aynı) --- */
 #days-input-list {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
@@ -366,15 +444,6 @@ button:hover {
 }
 
 
-.edit-all-btn {
-    background-color: #5856d6; 
-    box-shadow: 0 3px 6px rgba(88, 86, 214, 0.3);
-}
-
-.edit-all-btn:hover {
-    background-color: #4846c4;
-}
-
 /* --- Medya Sorguları (Telefon Uyumluluğu) --- */
 @media (max-width: 768px) {
     main {
@@ -388,13 +457,36 @@ button:hover {
         box-shadow: none;
         padding: 10px 5px;
     }
+    .calendar-actions {
+        flex-direction: column;
+    }
+    .data-transfer-group {
+        flex-direction: row; 
+    }
+    .transfer-btn {
+        width: 50%;
+    }
+    .summary-container {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 10px 15px;
+    }
+    .summary-item {
+        width: 100%;
+        text-align: left;
+        padding: 5px 0;
+        display: flex;
+        justify-content: space-between;
+    }
+    .summary-item strong {
+        display: inline;
+    }
     .modal-content {
         max-width: 95%;
     }
     #days-input-list {
         grid-template-columns: 1fr;
     }
-    /* Mobil görünüme uyum */
     .day-input-group {
         flex-wrap: wrap; 
     }
