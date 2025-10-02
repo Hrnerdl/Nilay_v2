@@ -7,17 +7,18 @@ body {
     background-color: #f8f8f8; /* Çok açık gri arkaplan */
     color: #333;
     line-height: 1.4;
-    /* Mobil Sayfa Yüksekliğini Düzeltmek İçin */
-    height: 100vh;
+    /* Dikey Kaydırmayı Sağlamak ve Yatay Kaydırmayı Engellemek İçin */
+    min-height: 100vh;
     box-sizing: border-box;
-    overflow-x: hidden; /* Yatay Kaydırmayı Engelle */
+    overflow-x: hidden; 
 }
 
 header {
     /* iOS benzeri hafif bir blur/gölge efekti */
     background-color: #ffffff; 
     color: #333;
-    padding: 20px 10px;
+    /* Padding azaltıldı */
+    padding: 15px 10px; 
     text-align: center;
     box-shadow: 0 0.5px 0 rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.05); /* Yumuşak gölge */
     position: sticky;
@@ -27,13 +28,14 @@ header {
 
 h1 {
     margin: 0;
-    font-size: 1.6em;
-    font-weight: 600; /* Daha ince, iOS tarzı başlık */
+    font-size: 1.5em; /* Başlık küçültüldü */
+    font-weight: 600; 
 }
 
 main {
     max-width: 1200px;
-    margin: 20px auto;
+    /* Dikey Marjinler azaltıldı */
+    margin: 10px auto; 
     padding: 0 10px;
 }
 
@@ -41,10 +43,11 @@ main {
     display: none !important;
 }
 
-/* --- Giriş Başlatma Ekranı Stili --- (Değişiklik yapılmadı) */
+/* --- Giriş Başlatma Ekranı Stili --- */
 .start-section {
     text-align: center;
-    margin: 40vh auto 0; /* Sayfanın ortasına yakın başlama */
+    /* Başlama noktası yukarı çekildi */
+    margin: 30vh auto 0; 
     padding: 30px;
     background-color: transparent; 
     max-width: 300px;
@@ -55,20 +58,20 @@ main {
     color: #666;
 }
 
-/* --- Genel Buton Stili (iOS Action Benzeri) --- (Değişiklik yapılmadı) */
+/* --- Genel Buton Stili (iOS Action Benzeri) --- */
 button {
-    background-color: #007aff; /* iOS Mavi Rengi */
+    background-color: #007aff; 
     color: white;
     padding: 12px 20px;
     border: none;
-    border-radius: 10px; /* Daha yuvarlak köşeler */
+    border-radius: 10px; 
     cursor: pointer;
     font-size: 1em;
     font-weight: 600;
     transition: background-color 0.2s ease, transform 0.1s ease;
     margin-top: 15px;
-    box-shadow: 0 3px 6px rgba(0, 122, 255, 0.3); /* Mavi gölge */
-    width: 100%; /* Mobil tam genişlik */
+    box-shadow: 0 3px 6px rgba(0, 122, 255, 0.3); 
+    width: 100%; 
 }
 
 button:hover {
@@ -77,7 +80,7 @@ button:hover {
 }
 
 .delete-btn {
-    background-color: #ff3b30; /* iOS Kırmızı Rengi */
+    background-color: #ff3b30; 
     margin-left: 0; 
     margin-top: 10px;
 }
@@ -92,8 +95,6 @@ button:hover {
     padding: 15px;
     border-radius: 12px; 
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); 
-    /* Mobil cihazlar için dikey alandan kazanmak amacıyla max-height eklendi */
-    /* Daha sonra media query'de tamamen esnek yapacağız */
 }
 
 .calendar-header {
@@ -105,7 +106,7 @@ button:hover {
 }
 
 .calendar-header h2 {
-    font-size: 1.5em;
+    font-size: 1.4em; /* Başlık küçültüldü */
     font-weight: 600;
     color: #333;
 }
@@ -114,8 +115,8 @@ button:hover {
     background: none;
     color: #007aff; 
     border: none;
-    padding: 8px 10px;
-    font-size: 1.5em;
+    padding: 6px 8px; /* Padding azaltıldı */
+    font-size: 1.4em; /* Boyut azaltıldı */
     font-weight: 300;
     border-radius: 8px;
     box-shadow: none;
@@ -129,11 +130,11 @@ button:hover {
 .calendar {
     display: grid;
     grid-template-columns: repeat(7, 1fr); 
-    gap: 3px;
+    gap: 2px; /* Boşluk azaltıldı */
 }
 
 .calendar-day-header, .calendar-day {
-    padding: 8px 3px;
+    padding: 5px 2px; /* Padding azaltıldı */
     text-align: center;
     border-radius: 6px;
 }
@@ -142,13 +143,13 @@ button:hover {
     background-color: transparent; 
     font-weight: 500;
     color: #666;
-    font-size: 0.9em;
+    font-size: 0.8em; /* Küçültüldü */
 }
 
 .calendar-day {
     background-color: #f9f9f9;
     cursor: pointer;
-    min-height: 85px; /* Masaüstü için varsayılan yükseklik */
+    min-height: 80px; /* Masaüstü için hafifçe azaltıldı */
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -170,47 +171,44 @@ button:hover {
 
 .day-number {
     font-weight: 700;
-    font-size: 1.1em;
+    font-size: 1em; /* Küçültüldü */
     align-self: flex-start; 
-    padding: 5px;
+    padding: 3px; /* Padding azaltıldı */
     color: #333;
 }
 
 /* Nöbet Bilgisi */
 .shift-info {
-    font-size: 0.75em; /* Nöbet bilgisini küçülttük */
+    font-size: 0.75em; 
     font-weight: 700;
     color: white;
-    padding: 3px 5px; /* Dikey boşluğu azalttık */
+    padding: 3px 5px; 
     border-radius: 6px;
-    margin-top: 1px; /* Boşluğu azalttık */
+    margin-top: 1px; 
     width: 90%;
     box-sizing: border-box;
     margin-bottom: 0;
-    /* Taşan metni kesmek için */
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    /* Dikey patlamayı engellemek için max-height eklendi */
     max-height: 1.2em; 
 }
 
 /* Nöbet Arkadaşı Bilgisi Stili */
 .friend-info {
-    font-size: 0.65em; /* Nöbet saatinden daha küçük */
+    font-size: 0.65em; 
     font-weight: 500;
     color: #333; 
     background-color: rgba(255, 255, 255, 0.8); 
     padding: 2px 4px;
     border-radius: 4px;
-    margin-top: 1px; /* Boşluğu azalttık */
+    margin-top: 1px; 
     width: 90%;
     box-sizing: border-box;
-    /* Taşan metni kesmek için */
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
-    margin-bottom: 2px; /* Alt boşluğu azalttık */
+    margin-bottom: 2px; 
 }
 
 /* --- NÖBET SAATİNE GÖRE RENKLER --- (Değişiklik yapılmadı) */
@@ -260,7 +258,7 @@ button:hover {
 }
 
 
-/* --- Modal Stilleri --- (Değişiklik yapılmadı) */
+/* --- Modal Stilleri --- */
 .modal {
     display: none; 
     position: fixed;
@@ -307,7 +305,7 @@ button:hover {
     font-weight: 300; 
 }
 
-/* --- Select Menü ve Input Stilleri --- (Değişiklik yapılmadı) */
+/* --- Select Menü ve Input Stilleri --- */
 .form-group select, 
 .month-selector input[type="month"],
 .form-group input[type="text"] {
@@ -352,7 +350,7 @@ button:hover {
 }
 
 
-/* --- Toplu Giriş Modal Stilleri --- (Değişiklik yapılmadı) */
+/* --- Toplu Giriş Modal Stilleri --- */
 #days-input-list {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
@@ -392,44 +390,43 @@ button:hover {
     main {
         padding: 0 5px;
         /* Mobil görünümde takvimin dikey alanda daha fazla esnemesini sağlamak için margin azaltıldı */
-        margin: 10px auto; 
+        margin: 5px auto; /* Marjin daha da azaltıldı */
     }
     header {
-        padding: 15px 10px;
+        padding: 10px 10px; /* Header padding'i azaltıldı */
     }
     .calendar-container {
         border-radius: 0; 
         box-shadow: none;
-        padding: 10px 5px;
+        padding: 5px; /* Konteyner padding'i azaltıldı */
     }
-    .modal-content {
-        max-width: 95%;
-    }
-    #days-input-list {
-        grid-template-columns: 1fr;
-    }
-    
+
     /* Mobil: Takvim Gün Yüksekliğini Küçültme */
     .calendar-day {
-        min-height: 70px; /* Dikey alandan kazanç */
-        padding: 5px 3px; /* İç boşluk azaltıldı */
+        min-height: 65px; /* Dikey alandan maksimum kazanç */
+        padding: 4px 2px; 
+    }
+    .day-number {
+        padding: 2px;
     }
 
     /* Mobil: Nöbet ve Arkadaş Bilgisini Daha Dar Alana Sığdırma */
     .shift-info {
-        font-size: 0.7em; 
-        padding: 2px 4px;
+        font-size: 0.65em; /* Daha da küçüldü */
+        padding: 2px 3px;
     }
     .friend-info {
-        font-size: 0.6em; 
-        padding: 1px 3px;
+        font-size: 0.55em; /* Daha da küçüldü */
+        padding: 1px 2px;
     }
-
-    /* Toplu Giriş Modalındaki Alanlar - TAŞMAYI ENGELLEME DÜZELTMESİ */
+    .calendar-day-header {
+        font-size: 0.75em;
+    }
+    
+    /* Toplu Giriş Modalındaki Alanlar - TAŞMAYI ENGELLEME DÜZELTMESİ (En kritik kısım) */
     .day-input-group {
         flex-wrap: wrap; 
-        /* Toplu input gruplarındaki select ve input'ların arasına çok az boşluk vererek taşmayı engelledik */
-        column-gap: 2%; 
+        /* column-gap kaldırıldı ve direkt genişlikler %49'a çıkarılarak alan açıldı */
     }
     .day-input-group label {
         width: 100%;
@@ -437,14 +434,19 @@ button:hover {
     }
     .day-input-group select, 
     .day-input-group input[type="text"] {
-        /* Genişliği %48'den %47'ye düşürerek taşmayı önledik (47 + 47 + 2 = %96, geri kalan boşluk) */
-        width: 47%; 
+        /* %47'den %49'a çıkarıldı, böylece modal içindeki elemanlar tam genişliği daha verimli kullanır. */
+        width: 49%; 
         box-sizing: border-box;
     }
     .day-input-group select {
         padding-right: 25px;
     }
     .day-input-group input[type="text"] {
-        width: 47%;
+        width: 49%;
+    }
+    
+    .json-buttons button {
+        margin-top: 5px; /* Düğmelerin arasındaki boşluk azaltıldı */
+        padding: 10px;
     }
 }
