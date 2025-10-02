@@ -173,7 +173,8 @@ const renderCalendar = (date) => {
                 mealsInfoEl.textContent = meals.split("\n")[0] + (meals.includes("\n") ? "..." : "");
                 dayEl.appendChild(mealsInfoEl);
             }
-            dayEl.addEventListener('click', () => openEditModal(dateKey, hours || 0, friend, meals)); 
+            dayEl.addEventListener('click', () => openInfoModal(dateKey, hours || 0, friend, meals)); 
+
         } else {
             dayEl.classList.add('free-day');
             const emojiEl = document.createElement('div');
@@ -290,3 +291,4 @@ document.addEventListener('DOMContentLoaded', () => {
         calendarView.classList.add('hidden');
     }
 });
+
