@@ -15,11 +15,11 @@ const daysInputList = document.getElementById('days-input-list');
 const editModal = document.getElementById('edit-modal');
 const summaryContainer = document.getElementById('summary-container'); 
 
-// Ay isimleri (Aynı)
+// Ay isimleri
 const monthNames = ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran",
                     "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"];
                     
-// Sabit Nöbet Seçenekleri (Aynı)
+// Sabit Nöbet Seçenekleri
 const SHIFT_OPTIONS = [
     { value: 0, label: "0 Saat (Boş/İzin)" },
     { value: 8, label: "8 Saat" },
@@ -27,7 +27,7 @@ const SHIFT_OPTIONS = [
     { value: 24, label: "24 Saat" }
 ];
 
-// --- Helper Fonksiyonlar (Aynı) ---
+// --- Helper Fonksiyonlar ---
 
 const saveShifts = () => {
     localStorage.setItem('shifts', JSON.stringify(shifts));
@@ -59,7 +59,7 @@ const getShiftIcon = (hours) => {
     return ''; 
 };
 
-// --- Aylık Özet Hesaplama ve Gösterme (Aynı) ---
+// --- Aylık Özet Hesaplama ve Gösterme ---
 const calculateMonthlySummary = (year, month) => {
     let totalHours = 0;
     let totalShiftDays = 0;
@@ -93,8 +93,7 @@ const calculateMonthlySummary = (year, month) => {
 };
 
 
-// --- Takvim Oluşturma Fonksiyonu (Aynı) ---
-// (renderCalendar fonksiyonu bir önceki adımda kart dönme mantığı için zaten güncellenmişti, tekrar aynı mantıkla kullanıldı)
+// --- Takvim Oluşturma Fonksiyonu ---
 const renderCalendar = (date) => {
     calendarEl.innerHTML = '';
     const year = date.getFullYear();
@@ -186,4 +185,111 @@ const renderCalendar = (date) => {
         // KART ARKA YÜZÜ (Yemek Listesi)
         const cardBack = document.createElement('div');
         cardBack.classList.add('day-card-back');
-        cardBack.innerHTML =
+        cardBack.innerHTML = `
+            <div class="back-title">🍽️ Yemek Listesi</div>
+            <div class="food-text">${food.replace(/\n/g, '<br>') || 'Liste Girilmedi'}</div>
+        `;
+        cardInner.appendChild(cardBack);
+
+
+        // Karta tıklayınca dönme ve düzenleme modalını açma
+        dayEl.addEventListener('click', (e) => {
+            const isInnerClick = e.target.classList.contains('day-card-inner') || e.target.closest('.day-card-inner');
+            const isEditShortcut = e.ctrlKey || e.metaKey || e.target.classList.contains('food-text');
+
+            if (isInnerClick || isEditShortcut) {
+                // Yemek listesi boşsa veya kısayol tuşuna basıldıysa/arka yüzdeki yazıya basıldıysa düzenleme modalını aç
+                if (food === '' || isEditShortcut) {
+                    openEditModal(dateKey, hours || 0, friend, food);
+                } else {
+                    cardInner.classList.toggle('flipped'); // Kartı döndür
+                }
+            }
+        });
+        
+        // Kartın dönmüşken tekrar tıklanıp düzenlenmesini sağlamak için ek dinleyici
+        cardBack.addEventListener('click', (e) => {
+            e.stopPropagation(); 
+            openEditModal(dateKey, hours || 0, friend, food);
+        });
+        
+        // Kartın ön yüzüne çift tıklama ile düzenleme modalını açma (hızlı erişim)
+        cardFront.addEventListener('dblclick', () => openEditModal(dateKey, hours || 0, friend, food));
+        
+        calendarEl.appendChild(dayEl);
+    }
+};
+
+// --- Tek Gün Düzenleme Modalı Fonksiyonları ---
+
+let currentEditingDate = null;  
+
+const openEditModal = (dateKey, hours, friend, food) => {
+    currentEditingDate = dateKey;
+    const dateParts = dateKey.split('-');
+    const formattedDate = `${dateParts[2]}.${dateParts[1]}.${dateParts[0]}`;  
+
+    document.getElementById('edit-date-display').textContent = `${formattedDate} tarihindeki nöbet/menü düzenle`;
+    
+    document.getElementById('edit-hours').value = hours;
+    document.getElementById('edit-friend-name').value = friend;
+    document.getElementById('edit-food-list').value = food;
+    
+
+    editModal.style.display = 'block';
+};
+
+const closeEditModal = () => {
+    editModal.style.display = 'none';
+    currentEditingDate = null;
+};
+
+// Tek Gün Kaydetme Formu
+document.getElementById('edit-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (!currentEditingDate) return;
+
+    const newHours = parseInt(document.getElementById('edit-hours').value);
+    const newFriend = document.getElementById('edit-friend-name').value.trim();
+    const newFood = document.getElementById('edit-food-list').value.trim();
+    
+    // Nöbet varsa VEYA yemek listesi girilmişse kaydet
+    if (newHours > 0 || newFood !== '') {
+        shifts[currentEditingDate] = { 
+            hours: newHours, 
+            friend: newFriend,
+            food: newFood 
+        };
+    } else {
+        delete shifts[currentEditingDate];
+    }
+
+    saveShifts();
+    renderCalendar(currentMonth);
+    closeEditModal();
+});
+
+// Tek Gün Silme Butonu
+document.getElementById('delete-shift-btn').addEventListener('click', () => {
+    if (!currentEditingDate) return;
+
+    if (confirm(`${currentEditingDate} tarihindeki nöbet/menü bilgisini silmek istediğinizden emin misiniz?`)) {
+        delete shifts[currentEditingDate];
+        saveShifts();
+        renderCalendar(currentMonth);
+        closeEditModal();
+    }
+});
+
+// --- Aylık Giriş Modalı Yönetimi ve İşlemleri ---
+
+// Toplu Giriş Modalındaki Gün Inputlarını Oluşturma
+const generateDayInputs = (year, month) => {
+    daysInputList.innerHTML = '';
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    
+    for (let day = 1; day <= daysInMonth; day++) {
+        const fullDate = new Date(year, month, day);
+        const dateKey = formatDate(fullDate);
+        const existingShift = shifts[dateKey] || {}; 
+        const existingHours = existingShift.hours ||
