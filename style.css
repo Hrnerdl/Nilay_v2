@@ -98,7 +98,7 @@ button:hover {
     display: grid;
     grid-template-columns: repeat(7, 1fr); 
     gap: 3px;
-    perspective: 1000px; /* 3D dönüş için */
+    perspective: 1000px; 
 }
 
 .calendar-day-header {
@@ -138,7 +138,7 @@ button:hover {
     position: absolute;
     width: 100%;
     height: 100%;
-    backface-visibility: hidden; /* Dönünce arka yüzü gizler */
+    backface-visibility: hidden; 
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -190,10 +190,10 @@ button:hover {
     padding: 0 3px;
     white-space: pre-wrap; 
     overflow-y: auto;
-    max-height: 60px; /* Telefonlarda sığması için */
+    max-height: 60px; 
     width: 100%;
     text-align: left;
-    cursor: pointer; /* Tıklanınca modalı açsın */
+    cursor: pointer; 
 }
 
 
@@ -257,7 +257,7 @@ button:hover {
     min-height: 80px;
 }
 
-/* --- Toplu Giriş Modal Stilleri (Düzeltilmiş ve Uyumlu) --- */
+/* --- Toplu Giriş Modal Stilleri (Düzeltildi) --- */
 .large-modal {
     max-width: 800px; 
 }
@@ -306,7 +306,7 @@ button:hover {
 }
 
 .daily-inputs textarea {
-    min-height: 35px;
+    min-height: 35px; /* Toplu girişte daha küçük */
     font-size: 0.8em;
     padding: 4px 6px;
 }
@@ -320,7 +320,7 @@ button:hover {
     }
 
     .daily-inputs select {
-        width: 100px; /* Saat için daha az yer */
+        width: 100px; 
         flex-shrink: 0;
     }
 
