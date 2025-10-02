@@ -59,19 +59,6 @@
         </div>
         
         <div id="edit-modal" class="modal">
-            <div id="info-modal" class="modal">
-    <div class="modal-content">
-        <span class="close-button info-close-btn">&times;</span>
-        <h3>Gün Bilgisi</h3>
-        <p id="info-date-display"></p>
-        <p><strong>Çalışma Saati:</strong> <span id="info-hours"></span></p>
-        <p><strong>Nöbet Arkadaşı:</strong> <span id="info-friend"></span></p>
-        <p><strong>Yemek Listesi:</strong></p>
-        <pre id="info-meals"></pre>
-        <button id="open-edit-from-info">Düzenle</button>
-    </div>
-</div>
-
             <div class="modal-content">
                 <span class="close-button edit-close-btn">&times;</span>
                 <h3>Nöbeti Düzenle</h3>
@@ -91,12 +78,6 @@
                         <label for="edit-friend-name">Nöbet Arkadaşı (İsteğe Bağlı):</label>
                         <input type="text" id="edit-friend-name" name="edit-friend-name" placeholder="İsim">
                     </div>
-
-                    <div class="form-group meal-input">
-                        <label for="edit-meals">Yemek Listesi:</label>
-                        <textarea id="edit-meals" name="edit-meals" placeholder="Kahvaltı, Öğle, Akşam..." rows="3"></textarea>
-                    </div>
-
                     <button type="submit">Kaydet</button>
                     <button type="button" id="delete-shift-btn" class="delete-btn">SİL</button>
                 </form>
@@ -108,4 +89,3 @@
     <script src="script.js"></script>
 </body>
 </html>
-
