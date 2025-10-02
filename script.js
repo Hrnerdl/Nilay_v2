@@ -286,4 +286,48 @@ document.getElementById('export-json-btn').addEventListener('click', () => {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = "
+    a.download = "nobet-verileri.json";
+    a.click();
+    URL.revokeObjectURL(url);
+});
+document.getElementById('import-json-btn').addEventListener('click', () => {
+    document.getElementById('import-json-input').click();
+});
+document.getElementById('import-json-input').addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (event) => {
+        try {
+            const importedData = JSON.parse(event.target.result);
+            if (typeof importedData === 'object') {
+                shifts = importedData;
+                saveShifts();
+                renderCalendar(currentMonth);
+                alert("JSON verileri başarıyla yüklendi!");
+            } else {
+                alert("Geçersiz JSON formatı.");
+            }
+        } catch (err) {
+            alert("JSON okunamadı: " + err.message);
+        }
+    };
+    reader.readAsText(file);
+});
+
+// --- Başlat ---
+document.addEventListener('DOMContentLoaded', () => {
+    if (Object.keys(shifts).length > 0) {
+        const lastDate = Object.keys(shifts).sort().pop();
+        if (lastDate) {
+            const [year, month] = lastDate.split('-').map(Number);
+            currentMonth = new Date(year, month - 1, 1);
+        }
+        startSection.classList.add('hidden');
+        calendarView.classList.remove('hidden');
+        renderCalendar(currentMonth);
+    } else {
+        startSection.classList.remove('hidden');
+        calendarView.classList.add('hidden');
+    }
+});
