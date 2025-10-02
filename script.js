@@ -390,6 +390,7 @@ fullMonthShiftForm.addEventListener('submit', (e) => {
     currentMonth = new Date(year, month, 1);
     renderCalendar(currentMonth);
     
+    // HATA DÜZELTME: Veri girildikten sonra takvimi göster
     startSection.classList.add('hidden');
     calendarView.classList.remove('hidden');
 });
