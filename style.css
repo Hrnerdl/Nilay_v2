@@ -425,9 +425,11 @@ button:hover {
         padding: 1px 3px;
     }
 
-    /* Toplu Giriş Modalındaki Alanlar */
+    /* Toplu Giriş Modalındaki Alanlar - TAŞMAYI ENGELLEME DÜZELTMESİ */
     .day-input-group {
         flex-wrap: wrap; 
+        /* Toplu input gruplarındaki select ve input'ların arasına çok az boşluk vererek taşmayı engelledik */
+        column-gap: 2%; 
     }
     .day-input-group label {
         width: 100%;
@@ -435,13 +437,14 @@ button:hover {
     }
     .day-input-group select, 
     .day-input-group input[type="text"] {
-        width: 48%; 
+        /* Genişliği %48'den %47'ye düşürerek taşmayı önledik (47 + 47 + 2 = %96, geri kalan boşluk) */
+        width: 47%; 
         box-sizing: border-box;
     }
     .day-input-group select {
         padding-right: 25px;
     }
     .day-input-group input[type="text"] {
-        width: 48%;
+        width: 47%;
     }
 }
