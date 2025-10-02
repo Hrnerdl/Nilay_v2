@@ -53,9 +53,9 @@ const getShiftColorClass = (hours) => {
 };
 
 const getShiftIcon = (hours) => {
-    if (hours === 8) return '☀️'; // Gündüz Nöbeti
-    if (hours === 16) return '🌙'; // Akşam Nöbeti
-    if (hours === 24) return '✨'; // Uzun Nöbet
+    if (hours === 8) return '☀️'; 
+    if (hours === 16) return '🌙'; 
+    if (hours === 24) return '✨'; 
     return ''; 
 };
 
@@ -79,7 +79,6 @@ const calculateMonthlySummary = (year, month) => {
         }
     }
 
-    // Özet konteynırını oluştur/güncelle
     if (!summaryContainer.innerHTML) {
          summaryContainer.innerHTML = `
             <div class="summary-item"><strong>Toplam Çalışma Saati:</strong> <span id="summary-hours"></span></div>
@@ -121,7 +120,6 @@ const renderCalendar = (date) => {
         calendarEl.appendChild(emptyDay);
     }
 
-    // Günleri Oluşturma Döngüsü
     for (let day = 1; day <= daysInMonth; day++) {
         const fullDate = new Date(year, month, day);
         const dateKey = formatDate(fullDate);
@@ -130,12 +128,10 @@ const renderCalendar = (date) => {
         const friend = shiftData ? shiftData.friend : '';
         const food = shiftData ? shiftData.food : ''; 
 
-        // KART CONTAINER'I
         const dayEl = document.createElement('div');
         dayEl.classList.add('calendar-day');
         dayEl.setAttribute('data-date', dateKey); 
 
-        // KART İÇİ DÖNÜŞ YAPISI
         const cardInner = document.createElement('div');
         cardInner.classList.add('day-card-inner');
         dayEl.appendChild(cardInner);
@@ -151,7 +147,7 @@ const renderCalendar = (date) => {
         dayNumberEl.textContent = day;
         cardFront.appendChild(dayNumberEl);
 
-        if (hours > 0) { // Nöbet Günü
+        if (hours > 0) { 
             dayEl.classList.add('shift-day');
             
             const shiftInfoEl = document.createElement('div');
@@ -172,7 +168,7 @@ const renderCalendar = (date) => {
                 friendInfoEl.textContent = friend;
                 cardFront.appendChild(friendInfoEl);
             }
-        } else { // Boş/İzin Günü
+        } else { 
             dayEl.classList.add('free-day');
             
             const emojiEl = document.createElement('div');
@@ -184,7 +180,6 @@ const renderCalendar = (date) => {
         // KART ARKA YÜZÜ (Yemek Listesi)
         const cardBack = document.createElement('div');
         cardBack.classList.add('day-card-back');
-        // Yeni satır karakterlerini <br> ile değiştirerek listeyi gösteriyoruz
         cardBack.innerHTML = `
             <div class="back-title">🍽️ Yemek Listesi</div>
             <div class="food-text">${food.replace(/\n/g, '<br>') || 'Liste Girilmedi'}</div>
@@ -194,24 +189,20 @@ const renderCalendar = (date) => {
 
         // Karta tıklayınca dönme ve düzenleme modalını açma
         dayEl.addEventListener('click', (e) => {
-            // Ctrl/Cmd tuşu basılıysa veya yemek listesi boşsa direkt düzenleme modalını aç
             const isEditShortcut = e.ctrlKey || e.metaKey; 
 
             if (isEditShortcut || food === '') {
                 openEditModal(dateKey, hours, friend, food);
             } else {
-                // Kartı döndür
                 cardInner.classList.toggle('flipped'); 
             }
         });
         
-        // Kartın dönmüşken arka yüzüne tıklanınca düzenleme modalını aç
         cardBack.addEventListener('click', (e) => {
             e.stopPropagation(); 
             openEditModal(dateKey, hours, friend, food);
         });
         
-        // Kartın ön yüzüne çift tıklama ile düzenleme modalını açma (hızlı erişim)
         cardFront.addEventListener('dblclick', () => openEditModal(dateKey, hours, friend, food));
         
         calendarEl.appendChild(dayEl);
@@ -250,15 +241,14 @@ document.getElementById('edit-form').addEventListener('submit', (e) => {
     const newFriend = document.getElementById('edit-friend-name').value.trim();
     const newFood = document.getElementById('edit-food-list').value.trim(); 
     
-    // Nöbet varsa VEYA yemek listesi girilmişse kaydet
     if (newHours > 0 || newFood !== '') {
         shifts[currentEditingDate] = { 
             hours: newHours, 
             friend: newFriend,
-            food: newFood // Yemek listesini kaydet
+            food: newFood 
         };
     } else {
-        delete shifts[currentEditingDate]; // Her ikisi de boşsa sil
+        delete shifts[currentEditingDate]; 
     }
 
     saveShifts();
@@ -291,19 +281,17 @@ const generateDayInputs = (year, month) => {
         const existingShift = shifts[dateKey] || {}; 
         const existingHours = existingShift.hours || 0;
         const existingFriend = existingShift.friend || '';
-        const existingFood = existingShift.food || ''; // Yemek listesi
+        const existingFood = existingShift.food || ''; 
         
         const dayInputGroup = document.createElement('div');
         dayInputGroup.classList.add('day-input-group', 'full-day-input-group'); 
         
         const dayName = fullDate.toLocaleDateString('tr-TR', { weekday: 'short' });
         
-        // 1. Label
         const labelHtml = `<label for="hours-${dateKey}">
                              ${day}. ${monthNames[month].substring(0, 3)} (${dayName})
                            </label>`;
 
-        // 2. Select (Saat)
         let selectHtml = `<select id="hours-${dateKey}" name="hours-${dateKey}">`;
         SHIFT_OPTIONS.forEach(option => {
             const selected = (option.value === existingHours) ? 'selected' : '';
@@ -311,10 +299,9 @@ const generateDayInputs = (year, month) => {
         });
         selectHtml += `</select>`;
 
-        // 3. Friend Input
         const friendInputHtml = `<input type="text" id="friend-${dateKey}" name="friend-${dateKey}" placeholder="İsim" value="${existingFriend}">`;
 
-        // 4. Food Input (TEXTAREA olarak)
+        // YEMEK LİSTESİ TEXTAREA
         const foodInputHtml = `<textarea id="food-${dateKey}" name="food-${dateKey}" placeholder="Yemek Listesi">${existingFood}</textarea>`;
 
 
@@ -344,7 +331,7 @@ const openFullMonthInputModal = (date) => {
     fullMonthInputModal.style.display = 'block';
 };
 
-// Toplu Giriş Formu Submit Olayı (Yemek listesi kaydı dahil)
+// Toplu Giriş Formu Submit Olayı 
 fullMonthShiftForm.addEventListener('submit', (e) => {
     e.preventDefault();
     
@@ -374,7 +361,6 @@ fullMonthShiftForm.addEventListener('submit', (e) => {
                 friend = defaultFriendName;
             }
             
-            // Nöbet varsa VEYA yemek listesi girilmişse kaydet
             if (hours > 0 || food !== '') {
                 shifts[dateKey] = { hours: hours, friend: friend, food: food };
             } else {
@@ -433,7 +419,6 @@ const importData = (event) => {
                 shifts = importedShifts;
                 saveShifts();
                 
-                // Takvimi güncel tarihine göre aç
                 const lastDate = Object.keys(shifts).sort().pop();
                 if (lastDate) {
                     const [year, month] = lastDate.split('-').map(Number);
