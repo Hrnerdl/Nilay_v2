@@ -414,4 +414,33 @@ button:hover {
         width: 48%;
     }
     /* /Yeni */
+    /* (Senin önceki stiller + eklenen kısımlar) */
+
+/* Yemek listesi textarea */
+.day-input-group textarea {
+    width: 100%;
+    margin-top: 5px;
+    resize: vertical;
+    font-size: 0.85em;
 }
+
+.meal-input textarea {
+    width: 100%;
+    box-sizing: border-box;
+    resize: vertical;
+}
+
+.meals-info {
+    font-size: 0.7em;
+    color: #555;
+    background-color: #f1f1f1;
+    padding: 2px 4px;
+    border-radius: 4px;
+    margin-top: 2px;
+    max-height: 40px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+}
+
