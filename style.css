@@ -36,7 +36,7 @@ main {
     display: none !important;
 }
 
-/* --- Genel Buton Stili (Aynı) --- */
+/* --- Genel Buton Stili --- */
 button {
     background-color: #007aff; 
     color: white;
@@ -67,7 +67,7 @@ button:hover {
     background-color: #e6342c;
 }
 
-/* --- Takvim Bölümü Stilleri (Aynı) --- */
+/* --- Takvim Bölümü Stilleri --- */
 .calendar-container {
     background-color: white;
     padding: 15px;
@@ -83,34 +83,11 @@ button:hover {
     padding: 0 5px;
 }
 
-.calendar-header h2 {
-    font-size: 1.5em;
-    font-weight: 600;
-    color: #333;
-}
-
-.calendar-header button {
-    background: none;
-    color: #007aff; 
-    border: none;
-    padding: 8px 10px;
-    font-size: 1.5em;
-    font-weight: 300;
-    border-radius: 8px;
-    box-shadow: none;
-    width: auto;
-}
-.calendar-header button:active {
-    background-color: rgba(0, 122, 255, 0.1);
-}
-
-/* Takvim Grid Yapısı */
 .calendar {
     display: grid;
     grid-template-columns: repeat(7, 1fr); 
     gap: 3px;
-    /* Kart dönme animasyonunu sağlamak için perspective ekle */
-    perspective: 1000px; 
+    perspective: 1000px; /* 3D dönüş için */
 }
 
 .calendar-day-header {
@@ -121,7 +98,7 @@ button:hover {
     font-size: 0.9em;
 }
 
-/* YENİ: Takvim Kartı Yapısı */
+/* KART DÖNÜŞ YAPISI */
 .calendar-day {
     background-color: #f9f9f9;
     cursor: pointer;
@@ -129,15 +106,7 @@ button:hover {
     position: relative;
     border: 1px solid #eee;
     border-radius: 6px;
-    
-    /* 3D dönüş için */
     transform-style: preserve-3d;
-}
-
-.empty-day {
-    background-color: transparent;
-    border: none;
-    cursor: default;
 }
 
 .day-card-inner {
@@ -150,7 +119,6 @@ button:hover {
     border-radius: 6px;
 }
 
-/* Kartın döndürülmüş hali */
 .day-card-inner.flipped {
     transform: rotateY(180deg);
 }
@@ -159,7 +127,7 @@ button:hover {
     position: absolute;
     width: 100%;
     height: 100%;
-    backface-visibility: hidden; /* Kartın arkası görünmesin */
+    backface-visibility: hidden; 
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -173,8 +141,6 @@ button:hover {
 /* KART ÖN YÜZÜ STİLİ */
 .day-card-front {
     z-index: 2;
-    background-color: inherit;
-    /* Nöbetli günler için arka planı burada ayarlıyoruz */
     background-color: #f9f9f9; 
     border-radius: 6px;
 }
@@ -186,10 +152,9 @@ button:hover {
     align-items: flex-start; 
 }
 
-
 /* KART ARKA YÜZÜ STİLİ (Yemek Listesi) */
 .day-card-back {
-    background-color: #d1e7fd; /* Daha parlak bir arka plan */
+    background-color: #d1e7fd; 
     color: #333;
     transform: rotateY(180deg);
     padding: 10px 5px;
@@ -211,15 +176,13 @@ button:hover {
     font-weight: 500;
     line-height: 1.2;
     padding: 0 3px;
-    white-space: pre-wrap; /* Satır atlamalarını koru */
+    white-space: pre-wrap; 
     overflow-y: auto;
-    max-height: 60px; /* Mobil için uygun yükseklik */
+    max-height: 60px; 
     width: 100%;
     text-align: left;
 }
 
-
-/* Kart İçindeki Öğeler */
 .day-number {
     font-weight: 700;
     font-size: 1.1em;
@@ -256,60 +219,23 @@ button:hover {
     margin-bottom: 5px; 
 }
 
-.free-day-emoji { 
-    font-size: 1.5em; 
-    margin-top: auto; 
-    margin-bottom: 5px; 
-    color: #34c759; 
-    font-weight: bold;
-    align-self: center;
-}
-
-
-/* --- NÖBET SAATİNE GÖRE RENKLER (Aynı) --- */
+/* --- NÖBET SAATİNE GÖRE RENKLER --- */
 .shift-8 { background-color: #3498db; box-shadow: 0 2px 4px rgba(52, 152, 219, 0.4); }
 .shift-16 { background-color: #f39c12; box-shadow: 0 2px 4px rgba(243, 156, 18, 0.4); }
 .shift-24 { background-color: #9b59b6; box-shadow: 0 2px 4px rgba(155, 89, 182, 0.4); }
-.shift-day .shift-info:not(.shift-8):not(.shift-16):not(.shift-24) { background-color: #ff2d55; box-shadow: 0 2px 4px rgba(255, 45, 85, 0.4); }
 
 
-/* --- Modal Stilleri (Aynı) --- */
-.modal {
-    display: flex;
-    visibility: hidden;
-    opacity: 0;
-    transition: visibility 0.2s, opacity 0.2s;
-}
-
-.modal[style*="block"] {
-    visibility: visible;
-    opacity: 1;
-}
-
-.modal-content {
-    background-color: #fefefe;
-    padding: 20px;
-    width: 90%; 
-    max-width: 400px;
-    border-radius: 14px; 
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-}
-
-.large-modal {
-    max-width: 600px; 
-}
-
-/* --- Input ve Textarea Stilleri (YENİ: Textarea Eklendi) --- */
+/* --- Input ve Textarea Stilleri --- */
 .form-group select,
 .form-group input[type="month"],
 .form-group input[type="text"],
-.form-group textarea { /* TEXTAREA EKLENDİ */
+.form-group textarea {
     width: 100%;
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 6px;
     background-color: #f9f9f9;
-    box-sizing: border-box; /* ÖNEMLİ: padding genişliğe dahil olsun */
+    box-sizing: border-box; 
 }
 
 .form-group textarea {
@@ -318,16 +244,110 @@ button:hover {
     font-family: inherit;
 }
 
-/* --- Toplu Giriş Modal Stilleri (Aynı) --- */
-/* ... (days-input-list ve day-input-group stilleri aynı) */
+/* --- Toplu Giriş Modal Stilleri (GÜNLÜK GİRİŞ İÇİN DÜZENLENDİ) --- */
+#days-input-list {
+    display: grid;
+    /* Her bir grid öğesi için daha fazla yer sağlamak için minmax ayarlandı */
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); 
+    gap: 10px;
+    max-height: 50vh; 
+    overflow-y: scroll;
+    padding-right: 5px;
+}
+
+.day-input-group {
+    padding: 10px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0; 
+    display: flex;
+    flex-direction: column; 
+    align-items: flex-start;
+}
+
+.day-input-group label {
+    font-size: 0.95em;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.daily-inputs {
+    display: flex;
+    flex-wrap: wrap; 
+    gap: 5px;
+    width: 100%;
+}
+
+.daily-inputs select {
+    width: 100px; 
+    flex-shrink: 0;
+}
+
+.daily-inputs input[type="text"] {
+    flex-grow: 1; 
+    min-width: 80px;
+    padding: 6px 8px;
+}
+
+.daily-inputs textarea {
+    width: 100%; 
+    min-height: 35px;
+    margin-top: 5px;
+    font-size: 0.8em;
+    padding: 4px 6px;
+}
 
 
 /* --- Medya Sorguları (Telefon Uyumluluğu) --- */
 @media (max-width: 768px) {
-    /* ... (Diğer mobil stiller aynı) */
-    
+    main {
+        padding: 0 5px;
+    }
+    .calendar-container {
+        border-radius: 0; 
+        box-shadow: none;
+        padding: 10px 5px;
+    }
+    .data-transfer-group {
+        flex-direction: row; 
+    }
+    .transfer-btn {
+        width: 50%;
+    }
+    .summary-container {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 10px 15px;
+    }
+    .summary-item {
+        width: 100%;
+        text-align: left;
+        padding: 5px 0;
+        display: flex;
+        justify-content: space-between;
+    }
     .day-card-back .food-text {
-        max-height: 40px; /* Mobil için daha dar alan */
+        max-height: 40px; 
         font-size: 0.7em;
+    }
+    /* Toplu Giriş Düzenlemesi */
+    #days-input-list {
+        grid-template-columns: 1fr;
+    }
+    .day-input-group {
+        align-items: stretch;
+    }
+    .daily-inputs {
+        flex-wrap: wrap;
+    }
+    .daily-inputs select {
+        width: 40%; 
+    }
+    .daily-inputs input[type="text"] {
+        width: 55%; 
+    }
+    .daily-inputs textarea {
+        width: 100%;
+        margin-top: 5px;
     }
 }
